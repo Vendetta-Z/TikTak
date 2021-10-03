@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+
+<head>
+    <title>TikTak |Home</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="{% static 'TikTak/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'TikTak/img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'TikTak/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.min.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/custom.css' %}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'TikTak/css/fontawesome.min.css' %}">
+
+</head>
+
+<body>
+
+    <!-- Header and TopNav -->
+    {% include "./header.html" %}
+    <!-- end Header and TopNav -->
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Start Banner Hero -->
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid " style="width: 300px;" src="TikTak/static/TikTak/img/carousel_img_01.png" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success"><b>TikTak</b></h1>
+                                <h3 class="h2">Для детек и малышей</h3>
+                                <p>
+                                    TikTak - это интернет магазин детской одежды турецкого качества. <br/>
+                                    У нас в ассортименте вы найдете все , начиная от детских пиленок , и заканчивая наборами из
+                                    нескольких товаров , таких как: носочки, шапочки, перчатки
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="TikTak/static/TikTak/img/banner_img_02.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">TikTak </h1>
+                                <h3 class="h2">В чем наше отличие от остальных магазинов?</h3>
+                                <p>
+                                    Вы заказываете товар , и наш курьер доставляем вам товар прямо до двери <br/>
+                                    И <strong>только после</strong> того как вы убедились что , выбранный вами товар , подходит вашему ребенку<br>
+                                    производиться оплата
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="TikTak/static/TikTak/img/banner_img_03.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Не нашли нужную вешь?</h1>
+                                <h3 class="h2">мы поможем! </h3>
+                                <p>
+                                    Наши сотрудники сделают все за вас , мы найдем желаемый товар , проверим его на качество<br/>
+                                    И только после того, как убедимся в качестве, и целостности товара, сообщим вам о его наличии
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+    <!-- End Banner Hero -->
+
+
+
+    <!-- Start Featured Product -->
+    <section class="bg-light">
+    <div class="container py-5">
+        <div class="col-lg-3 categorys_block">
+        <h1 class="h2 pb-4">Новое поступление товаров: </h1>
+            {% for key, value in Categorys%}
+                    <a href="{{key}}">{{key}}</a>
+            {% endfor %}
+    </div>
+        <div class="row">
+
+            <div class="row" >
+                {% for Product in page_obj %}
+                    <div class="col-md-3">
+                        <div class="card mb-4 product-wap  rounded-0">
+                            <div class="card rounded-1">
+                                <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.Product_image}}">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        <li><a class="btn btn-success text-white" href="{{Product.ID_Product}}/"><i class="far fa-heart"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.ID_Product}}/"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.ID_Product}}/"><i class="fas fa-cart-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{Product.ID_Product}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                    <li>M/L/X/XL</li>
+
+                                </ul>
+                                <p class="text-center mb-0 price">{{Product.Product_price}} p.</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
+           <div div="row">
+                    <div class="pagination">
+                    <ul class="pagination pagination-lg justify-content-end">
+
+                         {% if page_obj.has_previous %}
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="?page=1" tabindex="-1">
+                               &laquo;Last
+                            </a>
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">
+                               {{page_obj.previous_page_number}}
+                            </a>
+
+
+                         {% endif %}
+
+                            <a class="Product_Page_Numeration active  page-link   rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">
+                                {{page_obj.number}}
+                            </a>
+
+
+
+                         {% if page_obj.has_next %}
+
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="?page={{ page_obj.next_page_number }}" tabindex="-1">
+                                {{page_obj.next_page_number}}
+                            </a>
+
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="?page={{ page_obj.paginator.num_pages }}" tabindex="-1">
+                                Last &raquo;
+                            </a>
+
+                         {% endif %}
+                    </ul>
+                </div>
+           </div>
+        </div>
+    </div>
+    </section>
+    <!-- End Featured Product -->
+
+
+
+    <!-- Start Categories of The Month -->
+    <section class="container py-5">
+        <div class="row text-center pt-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Категории</h1>
+                <p>
+                    При помощи удобной сортировки , вам будет легче выбрать вещь , для своего ребенка
+                </p>
+            </div>
+        </div>
+        <div class="row MainPageCategoryImageBlock">
+            <div class="col-12 col-md-4 p-5 mt-3 ">
+                <a href="{% url 'Shop_cat' 'Платье'%}"><img src="TikTak/static/TikTak/img/category_img_01.jpg" class="rounded-circle img-fluid border"></a>
+                <h5 class="text-center mt-3 mb-3">Платья</h5>
+                <p class="text-center"><a href="{% url 'Shop_cat' 'Платье'%}" class="btn btn-success">К товарам</a></p>
+            </div>
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="{% url 'Shop_cat' 'Шортики'%}"><img src="TikTak/static/TikTak/img/category_img_02.jpg" class="rounded-circle img-fluid border"></a>
+                <h2 class="h5 text-center mt-3 mb-3">Шортики</h2>
+                <p class="text-center"><a href="{% url 'Shop_cat' 'Шортики'%}" class="btn btn-success">К товарам</a></p>
+            </div>
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="{% url 'Shop_cat' 'Обувь'%}"><img src="TikTak/static/TikTak/img/category_img_03.jpg" class="rounded-circle img-fluid border"></a>
+                <h2 class="h5 text-center mt-3 mb-3">Обувь</h2>
+                <p class="text-center"><a href="{% url 'Shop_cat' 'Обувь'%}" class="btn btn-success">К товарам</a></p>
+            </div>
+        </div>
+    </section>
+    <!-- End Categories of The Month -->
+
+
+
+    <!-- Start Footer -->
+    {% include './Footer.html'%}
+    <!-- End Footer -->
+
+
+    <script src="{% static 'TikTak/js/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/jquery-migrate-1.2.1.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/templatemo.js' %}"></script>
+    <script src="{% static 'TikTak/js/custom.js' %}"></script>
+
+
+</body>
+
+</html>

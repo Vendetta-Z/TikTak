@@ -1,0 +1,62 @@
+
+{% for key,value in request.session.cart.items %}
+{% endfor%}
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+
+    <link rel="apple-touch-icon" href="{% static 'TikTak/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'TikTak/img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.min.css' %}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'TikTak/css/fontawesome.min.css' %}">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'cart/style.css'%}">
+    <title>TikTak|Cart</title>
+</head>
+<body>
+{% include 'TikTak/header.html' %}
+
+            {% if request.session.cart.items%}
+                {% for key,value in request.session.cart.items %}
+                    <div class="main_cart_div">
+                        <div class="card mb-1 product-wap inline-block  rounded-0">
+                                <img class="card-img cart_item_img Product-image_sizing rounded-0 img-fluid" src="{{value.image}}">
+
+                            <div class="card-body item_cart">
+                                <h4  class="cart_item text-decoration-none">{{value.name}}   ||||||||  {{key}} </h4>
+                                <h6  class="cart_item description">{{value.description}}</h6>
+
+                                <h6 class="cart_item position-absolute quantity">Количество <a class="increment" href="{% url 'item_decrement' key %}">-</a> {{value.quantity}} <a class="increment" href="{% url 'item_increment' key %}">+</a> </h6>
+                                <h6 class="cart_item position-absolute brand">Производитель - {{value.brand}}</h6>
+                                <h6 class='cart_item position-absolute size'>Размер - {{value.size}}</h6>
+                                <!--<span class="product-color-dot color-dot-red{{value.name}} float-left rounded-circle ml-1"></span>-->
+
+                                <h6 class="cart_item position-absolute price ">Цена - {{value.price}} p</h6>
+                                    {{Cart.total_sum}}
+                                <h6 class=" remove-btn"><a href="{% url 'item_remove' key %}">Удалить</a></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total_block_div">
+                        <span class="total_sum badge-success mr-0">Итог  - {{total_sum}} руб.</span>
+                        <input type="button" value="Совершить покупку" class="checkout-btn badge-success mr-0"/>
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                <div class="margin-top-a text-center ">
+                        <h1 class="cart_empty">В корзине ничего нет!</h1>
+                    <img class="tumbleweed" src="{% static 'TikTak/img/tumbleweed.jpg'%}">
+                    </div>
+            {% endif %}
+
+
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="{% static 'TikTak/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'TikTak/img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'TikTak/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.min.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/custom.css' %}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'TikTak/css/fontawesome.min.css' %}">
+    
+
+</head>
+
+<body>
+
+    <!-- Header and TopNav -->
+    {% include "./header.html" %}
+    <!-- end Header and TopNav -->
+
+
+    <!-- Modal -->
+    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="w-100 pt-1 mb-5 text-right">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="get" class="modal-content modal-body border-0 p-0">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control " id="inputModalSearch" name="q" placeholder="Search ...">
+                    <button type="submit" class="input-group-text bg-success text-light">
+                        <i class="fa fa-fw fa-search text-white"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Start Content -->
+    <div class=" py-5 middle-shop-block ">
+
+
+
+
+        <form searching_and_sorting_top_block>
+                    <div class="sorted_to_block d-flex">
+                    <span class="form-control-span">Сортировать по</span>
+                    <select class="form-control" name="fuck">
+                        <option>...</option>
+                        <option>Убыванию цены</a></option>
+                        <option>Возрастанию цены</option>
+                    </select>   
+                    <div class="Shop_search_block">
+                        <input type="text" name="Shop_search_input" placeholder="Найти">
+                        <input type="submit" name="Shop_search_submit" value="Поиск">
+                    </div>
+            </div>
+        </form>
+
+
+
+
+         <div class="categorys_block_shop">
+             <form class="OrderBy_form" method="get" action="{% url 'Shop' %}">
+                {% csrf_token %}
+                
+                {% for key, value in Categorys%}    
+                    <label class="OrderBy_form_checkbox fuck">
+                        <input type="checkbox" name="orderby" value="{{key}}" ><span>{{key}}</span>
+                    </label>
+                {% endfor %}
+
+                <label  class="OrderBy_form_checkbox" id="ForGirlsBgColor">
+                        <input class="Cat_for_Girls" type="checkbox" name="gender_orderby" value="Для девочек" ><span>Для девочек</span></label>
+                <label  class="OrderBy_form_checkbox " id="ForBoysBgColor" >
+                        <input type="checkbox" name="gender_orderby" value="Для мальчиков" ><span>Для мальчиков</span></label>
+
+                <a style="width:95%; margin: 4px ;" href="/All_products" >Показать все товары</a>
+                
+
+
+                <div class="Sorted_lists_div">
+                    <span >Размер</span>
+                    <div class="list-with-manufacturer">
+                        <ul>
+                            <label><input type="checkbox" name="">Пока что нужно поправить саму систему размеров в бд , и в классе</label>
+                            
+                        </ul>
+                    </div>    
+                </div>
+                
+                    <div class="Sorted_lists_div">
+                        <span >Возраст</span>
+                        <div class="list-with-manufacturer">
+                            <ul>
+                                {% for e in example %}
+                                    <label><input type="checkbox" name="manufacture_to_sorted" value="{{e}}" >{{e}}</label>
+                                {% endfor %}
+                            </ul>
+
+
+                        </div>    
+                    </div>
+
+                <div class="Sorted_lists_div">
+                    <span >Производитель</span>
+                    <div class="list-with-manufacturer">
+                        <ul>
+                            {% for M in Manufactures%}
+                            <label><input type="checkbox" name="manufacture_to_sorted" value="{{M}}" >{{M}}</label>
+                            {% endfor %}
+                        </ul>
+                    </div>    
+                </div>
+
+                <input type="submit" class="EnterFilteringShopListBtn" value="Показать">
+             </form>
+
+        </div>
+
+        <div class="row Products_list_block">
+
+                <div class="row Products_list_block_2" >
+                {% if page_obj%}
+                    {% for Product in page_obj %}
+                        <div class="col-md-3 product_list_item_block">
+                            <div class="card mb-3 product-wap  rounded-0">
+                                <div class="card rounded-1">
+                                    <img class="card-img Product-image_sizing rounded-0 img-fluid" src="/{{Product.Product_image}}">
+                                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                        <ul class="list-unstyled">
+                                            <li><a class="btn btn-success text-white" href="/{{Product.ID_Product}}/"><i class="far fa-heart"></i></a></li>
+                                            <li><a class="btn btn-success text-white mt-2" href="/{{Product.ID_Product}}/"><i class="far fa-eye"></i></a></li>
+                                            <li><a class="btn btn-success text-white mt-2" href="/{{Product.ID_Product}}/"><i class="fas fa-cart-plus"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <a href="{{Product.ID_Product}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
+                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                        <li>M/L/X/XL</li>
+                                        <li class="pt-2">
+                                            <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                            <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                            <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                            <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                                <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                        </li>
+                                    </ul>
+                                    <p class="text-center mb-0 price">Цена :{{Product.Product_price}} p.</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                         <div ">
+                            <h1 style="width: 100%; color: white; text-align: center;">Ничего не найдено!</h1>
+                        </div>
+                {% endif %}
+            </div>
+
+
+
+           <div div="row">
+                    <div class="pagination">
+                    <ul class="pagination pagination-lg justify-content-end">
+
+                         {% if page_obj.has_previous %}
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="?page=1" tabindex="-1">
+                               &laquo;Last
+                            </a>
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">
+                               {{page_obj.previous_page_number}}
+                            </a>
+
+
+                         {% endif %}
+
+                            <a class="Product_Page_Numeration active  page-link   rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">
+                                {{page_obj.number}}
+                            </a>
+
+
+
+                         {% if page_obj.has_next %}
+
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="?page={{ page_obj.next_page_number }}" tabindex="-1">
+                                {{page_obj.next_page_number}}
+                            </a>
+
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="?page={{ page_obj.paginator.num_pages }}" tabindex="-1">
+                                Last &raquo;
+                            </a>
+
+                         {% endif %}
+                    </ul>
+                </div>
+           </div>
+        </div>
+    </div>
+
+    <!-- End Content -->
+
+    
+
+    <!-- Start Footer -->
+    {% include './Footer.html'%}
+    <!-- End Footer -->
+
+
+
+    <script src="{% static 'TikTak/js/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/jquery-migrate-1.2.1.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/templatemo.js' %}"></script>
+    <script src="{% static 'TikTak/js/custom.js' %}"></script>
+
+    <!-- End Script -->
+</body>
+
+</html>
