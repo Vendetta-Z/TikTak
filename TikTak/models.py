@@ -1,4 +1,12 @@
 from django.db import models
+from multiselectfield import MultiSelectField
+Choises = (
+    ('от 0 - 2-х мес', '0-2'),
+    ('от двух до трех мес.', '2-3'),
+    ('от трех до пяти мес.', '3-5'),
+    ('от шести до восьми мес.', '6-8'),
+    ('от девяти мес. до одного года', '9-1'),)
+
 
 class Product(models.Model):
     ID_Product = models.AutoField(primary_key=True)
@@ -8,7 +16,8 @@ class Product(models.Model):
     Product_image = models.ImageField(blank=True, upload_to='TikTak/static/img/')
     Product_color = models.CharField(max_length=20)
     Product_brand = models.CharField(max_length=100, default=None)
-    Product_size = models.CharField(max_length=30, default='None')
+    Product_size = MultiSelectField(choices=Choises)
+
     Product_characteristics = models.CharField(max_length=1000)
 
     P_Categorys = [
@@ -43,12 +52,9 @@ class Product(models.Model):
         returned_list = []
         for product in Product.objects.all():
             a = (product.__getattribute__(f))
-            for i in a:
-                print(i)
             returned_list.append(a)
         return set(returned_list)
 
     def Product_item_in_list(self, str):
         size = str.split(' ')
         return list(size)
-

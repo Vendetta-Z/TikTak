@@ -97,20 +97,15 @@ class RegAndLoginView():
         error = ''
         message = ''
         form = RegisterForm
-        print('###################################   1')
         if request.POST:
             form = RegisterForm(request.POST)
-            print('###################################    2')
-
             if form.is_valid() is not True:
                 name = form.cleaned_data['UserName']
                 email = form.cleaned_data['Email']
                 password = form.cleaned_data['Password']
                 ConfirmPass = form.cleaned_data['ConfirmPass']
-                print(form.cleaned_data)
                 if password == ConfirmPass:
                     if User.objects.filter(username=name):
-                        print('############################    4')
                         error = "Такой логин уже существует"
                         return render(request, 'TikTak/register.html', {'error': error, "message": message, "form": form})
                     else:
