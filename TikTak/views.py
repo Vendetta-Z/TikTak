@@ -4,13 +4,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import login as dj_login
 from django.core import paginator
+
 from .forms import LoginForm, RegisterForm
 from .models import Product
 from .Cart import Cart
-from functools import reduce
-import operator
 
-from django.db.models import Q
 product = Product.objects.all()
 
 
@@ -48,6 +46,7 @@ class ProductView():
             filter_attributes = request.GET.getlist('orderby')
             brand_to_sorted = request.GET.getlist('manufacture_to_sorted')
             gender_to_sort = request.GET.get('gender_orderby')
+            size_to_sort = request.GET.getlist('size_to_sort')
 
             if filter_attributes:
                 attributes_names.update({'Product_Category__in': filter_attributes})
@@ -56,9 +55,15 @@ class ProductView():
             if gender_to_sort:
                 attributes_names.update({'for_which_gender': gender_to_sort})
 
-            '''добавить сортировку по убыванию , или возрастанию , для этого можно создать функицю в классе
-               А также использовать свитч кейсы , для определенных действий '''
+
+
             product = Product.objects.filter(**attributes_names)
+
+            if size_to_sort:
+                size_sort_list = [k for k in product if k.Product_size[0] in size_to_sort or k.Product_size[1] in size_to_sort]
+                product = size_sort_list
+
+
 
             if search_input:
                 product = product.filter(Product_name__icontains=search_input)

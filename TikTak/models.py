@@ -13,11 +13,11 @@ class Product(models.Model):
     Product_characteristics = models.CharField(max_length=1000)
 
     Choises = (
-        ('0-3 месяца', '0-2'),
-        ('3-6 месяцев', '2-3'),
-        ('6-12 месяцев', '3-5'),
-        ('12-18 месяцев', '6-8'),
-        ('18-24 месяца', '9-11'),
+        ('0-3 месяца', '0-3'),
+        ('3-6 месяцев', '3-6'),
+        ('6-12 месяцев', '6-12'),
+        ('12-18 месяцев', '12-18'),
+        ('18-24 месяца', '18-24'),
         ('2 года', '2-y'),
         ('3 года', '3-y'),
         ('4 года', '4-y'),
@@ -50,7 +50,7 @@ class Product(models.Model):
     Product_Category = models.CharField(
         max_length=7,
         choices=P_Categorys,
-        default='Шортики',
+        default='None',
     )
 
     for_which_gender = models.CharField(

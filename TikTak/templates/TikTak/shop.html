@@ -75,7 +75,7 @@
                 
                 {% for key, value in Categorys%}    
                     <label class="OrderBy_form_checkbox fuck">
-                        <input type="checkbox" name="orderby" value="{{key}}" ><span>{{key}}</span>
+                        <input type="checkbox" name="orderby" value="{{key}}" ><span>{{key}}  ({{key|length}})</span>
                     </label>
                 {% endfor %}
 
@@ -84,7 +84,7 @@
                 <label  class="OrderBy_form_checkbox " id="ForBoysBgColor" >
                         <input type="checkbox" name="gender_orderby" value="Для мальчиков" ><span>Для мальчиков</span></label>
 
-                <a style="width:95%; margin: 4px ;" href="/All_products" >Показать все товары</a>
+                <a style="width:95%; margin: 4px ;" class="text-center" href="/All_products" >Показать все товары</a>
                 
 
 
@@ -93,24 +93,12 @@
                     <div class="list-with-manufacturer">
                         <ul>
                             {% for key,value in Size_list%}
-                                <label><input type="checkbox" name="">{{key}}</label>
+                                <label><input type="checkbox" name="size_to_sort" value="{{key}}">{{key}}</label>
                             {% endfor %}
                         </ul>
-                    </div>    
+                    </div>
                 </div>
                 
-                    <div class="Sorted_lists_div">
-                        <span >Возраст</span>
-                        <div class="list-with-manufacturer">
-                            <ul>
-                                {% for e in example %}
-                                    <label><input type="checkbox" name="manufacture_to_sorted" value="{{e}}" >{{e}}</label>
-                                {% endfor %}
-                            </ul>
-
-
-                        </div>    
-                    </div>
 
                 <div class="Sorted_lists_div">
                     <span >Производитель</span>
@@ -146,7 +134,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{Product.ID_Product}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
+                                    <a href="/{{Product.ID_Product}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
                                     <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                         <li>M/L/X/XL</li>
                                         <li class="pt-2">
