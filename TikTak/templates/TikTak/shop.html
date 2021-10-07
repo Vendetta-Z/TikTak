@@ -92,8 +92,9 @@
                     <span >Размер</span>
                     <div class="list-with-manufacturer">
                         <ul>
-                            <label><input type="checkbox" name="">Пока что нужно поправить саму систему размеров в бд , и в классе</label>
-                            
+                            {% for key,value in Size_list%}
+                                <label><input type="checkbox" name="">{{key}}</label>
+                            {% endfor %}
                         </ul>
                     </div>    
                 </div>

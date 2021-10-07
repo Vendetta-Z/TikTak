@@ -1,11 +1,5 @@
 from django.db import models
 from multiselectfield import MultiSelectField
-Choises = (
-    ('от 0 - 2-х мес', '0-2'),
-    ('от двух до трех мес.', '2-3'),
-    ('от трех до пяти мес.', '3-5'),
-    ('от шести до восьми мес.', '6-8'),
-    ('от девяти мес. до одного года', '9-1'),)
 
 
 class Product(models.Model):
@@ -16,9 +10,33 @@ class Product(models.Model):
     Product_image = models.ImageField(blank=True, upload_to='TikTak/static/img/')
     Product_color = models.CharField(max_length=20)
     Product_brand = models.CharField(max_length=100, default=None)
+    Product_characteristics = models.CharField(max_length=1000)
+
+    Choises = (
+        ('0-3 месяца', '0-2'),
+        ('3-6 месяцев', '2-3'),
+        ('6-12 месяцев', '3-5'),
+        ('12-18 месяцев', '6-8'),
+        ('18-24 месяца', '9-11'),
+        ('2 года', '2-y'),
+        ('3 года', '3-y'),
+        ('4 года', '4-y'),
+        ('5 лет', '5-y'),
+        ('6 лет', '6-y'),
+        ('7 лет', '7-y'),
+        ('8 лет', '8-y'),
+        ('9 лет', '9-y'),
+        ('10 лет', '10-y'),
+        ('11 лет', '11-y'),
+        ('12 лет', '12-y'),
+        ('13 лет', '13-y'),
+        ('14 лет (XS)', '14-y'),
+        ('16 лет (S)', '16-y'),
+        ('18 лет (M)', '18-y'),
+    )
+
     Product_size = MultiSelectField(choices=Choises)
 
-    Product_characteristics = models.CharField(max_length=1000)
 
     P_Categorys = [
         ('Шортики', 'Shorts'),
@@ -55,6 +73,3 @@ class Product(models.Model):
             returned_list.append(a)
         return set(returned_list)
 
-    def Product_item_in_list(self, str):
-        size = str.split(' ')
-        return list(size)

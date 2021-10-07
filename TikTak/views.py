@@ -37,8 +37,7 @@ class ProductView():
 
     def Shop_single_view(request, pk):
         product = Product.objects.get(ID_Product=pk)
-        size_list = product.Product_item_in_list(product.Product_size)
-        return render(request, 'TikTak/shop-single.html', {'product': product, 'size_list': size_list})
+        return render(request, 'TikTak/shop-single.html', {'product': product, 'size_list': product.Product_size})
 
     def Shop_view(request):
         product = Product.objects.all()
@@ -77,7 +76,7 @@ class ProductView():
                                                     'page_obj': page_obj,
                                                     'Categorys': Product.P_Categorys,
                                                     'Manufactures': Product.get_a_list_without_dublicate('self','Product_brand'),
-                                                    'example': Product.get_a_list_without_dublicate('self','Product_size')
+                                                    'Size_list': Product.Choises,
         })
 
 
