@@ -6,47 +6,53 @@ from django.contrib.auth import login as dj_login
 from django.core import paginator
 
 from .forms import LoginForm, RegisterForm
-from .models import Product
+from .models import Product, get_a_list_without_dublicate
 from .Cart import Cart
 
 product = Product.objects.all()
 
 
+class ProductView:
 
-
-
-class ProductView():
-
-    def index(request):
+    def index(self):
         Paginator = paginator.Paginator(product, 9)
-        page_number = request.GET.get('page')
+        page_number = self.GET.get('page')
         page_obj = Paginator.get_page(page_number)
 
-        #Product.CreateProduct('self')
-        return render(request, 'TikTak/index.html', {'product': product, 'users': User, 'page_obj': page_obj, 'Categorys':Product.P_Categorys})
+        return render(self, 'TikTak/index.html', {
+            'product': product,
+            'users': User,
+            'page_obj': page_obj,
+            'Categorys': Product.P_Categorys
+        })
 
-    def view_category(request, key):
+    def view_category(self, key):
         answer_category = key.replace(' ', '')
         product = Product.objects.filter(Product_Category=answer_category)
         Paginator = paginator.Paginator(product, 9)
         page_number = request.GET.get('page')
         page_obj = Paginator.get_page(page_number)
-        return render(request, 'TikTak/index.html', {'product': product, 'users': User, 'page_obj': page_obj, 'Categorys': Product.P_Categorys} )
+        return render(request, 'TikTak/index.html', {
+            'product': product,
+            'users': User,
+            'page_obj': page_obj,
+            'Categorys': Product.P_Categorys
+        })
 
-    def Shop_single_view(request, pk):
+    def shop_single_view(self, pk):
         product = Product.objects.get(ID_Product=pk)
-        return render(request, 'TikTak/shop-single.html', {'product': product, 'size_list': product.Product_size})
+        return render(self, 'TikTak/shop-single.html', {'product': product, 'size_list': product.Product_size})
 
-    def Shop_view(request):
+    def shop_view(self):
         product = Product.objects.all()
 
-        if request.GET:
+        if self.GET:
             attributes_names = {}
-            search_input = request.GET.get('Shop_search_input')
-            filter_attributes = request.GET.getlist('orderby')
-            brand_to_sorted = request.GET.getlist('manufacture_to_sorted')
-            gender_to_sort = request.GET.get('gender_orderby')
-            size_to_sort = request.GET.getlist('size_to_sort')
+            search_input = self.GET.get('Shop_search_input')
+            filter_attributes = self.GET.getlist('orderby')
+            brand_to_sorted = self.GET.getlist('manufacture_to_sorted')
+            gender_to_sort = self.GET.get('gender_orderby')
+            size_to_sort = self.GET.getlist('size_to_sort')
 
             if filter_attributes:
                 attributes_names.update({'Product_Category__in': filter_attributes})
@@ -55,38 +61,29 @@ class ProductView():
             if gender_to_sort:
                 attributes_names.update({'for_which_gender': gender_to_sort})
 
-
-
             product = Product.objects.filter(**attributes_names)
 
             if size_to_sort:
-                size_sort_list = [k for k in product if k.Product_size[0] in size_to_sort or k.Product_size[1] in size_to_sort]
+                size_sort_list = [k for k in product if
+                                  k.Product_size[0] in size_to_sort or k.Product_size[1] in size_to_sort]
                 product = size_sort_list
-
-
 
             if search_input:
                 product = product.filter(Product_name__icontains=search_input)
 
-
-
-
-
         Paginator = paginator.Paginator(product, 20)
-        page_number = request.GET.get('page')
+        page_number = self.GET.get('page')
         page_obj = Paginator.get_page(page_number)
 
-        return render(request, 'TikTak/shop.html', {
-                                                    'product': product,
-                                                    'page_obj': page_obj,
-                                                    'Categorys': Product.P_Categorys,
-                                                    'Manufactures': Product.get_a_list_without_dublicate('self','Product_brand'),
-                                                    'Size_list': Product.Choises,
+        return render(self, 'TikTak/shop.html', {
+            'product': product,
+            'page_obj': page_obj,
+            'Categorys': Product.P_Categorys,
+            'Manufactures': get_a_list_without_dublicate('Product_brand'),
+            'Size_list': Product.Choises,
         })
 
-
-    def Shop_view_Category(request, key):
-        answer_category = key.replace(' ', '')
+    def shop_view_category(self, key):
         if key == 'All_products':
             product = Product.objects.all()
         Paginator = paginator.Paginator(product, 20)
@@ -95,13 +92,12 @@ class ProductView():
         return redirect('Shop')
 
 
-class RegAndLoginView():
+class RegAndLoginView:
 
-    def RegisterView(request):
-        error = ''
+    def register_view(self):
         message = ''
         form = RegisterForm
-        if request.POST:
+        if self.POST:
             form = RegisterForm(request.POST)
             if form.is_valid() is not True:
                 name = form.cleaned_data['UserName']
@@ -111,93 +107,88 @@ class RegAndLoginView():
                 if password == ConfirmPass:
                     if User.objects.filter(username=name):
                         error = "Такой логин уже существует"
-                        return render(request, 'TikTak/register.html', {'error': error, "message": message, "form": form})
+                        return render(self, 'TikTak/register.html',
+                                      {'error': error, "message": message, "form": form})
                     else:
                         user = User.objects.create_user(name, email, password)
-                        dj_login(request, user)
+                        dj_login(self, user)
                         return redirect('index')
                 else:
                     error = 'Пароли не совпадают'
-                    return render(request, 'TikTak/register.html', {'error': error, "message": message, "form": form})
+                    return render(self, 'TikTak/register.html', {'error': error, "message": message, "form": form})
 
+        return render(self, 'TikTak/register.html', {"form": form, "message": message})
 
-            else:
-                error = "Error fuck'er mother fuck'er"
-
-        return render(request, 'TikTak/register.html', {"form": form, "message": message})
-
-
-    def LoginView(request):
+    def login_view(self):
         message = ''
         form = LoginForm
-        if request.method == "GET":
-            form = LoginForm(request.GET)
+        if self.method == "GET":
+            form = LoginForm(self.GET)
             if form.is_valid():
                 name = form.cleaned_data['UserName']
                 password = form.cleaned_data['Password']
                 if authenticate(username=name, password=password):
                     user = authenticate(username=name, password=password)
-                    login(request, user)
+                    login(self, user)
 
                     return redirect('index')
                 else:
                     message = 'проверьте введенные данные!'
-                    return render(request, 'TikTak/login.html', {'message': message})
+                    return render(self, 'TikTak/login.html', {'message': message})
             else:
                 error = 'Пожалуйста проверьте правильность заполнения формы!. Форма чувствительна к регистру'
-                return render(request, 'TikTak/login.html', {"form": form, "message": message})
+                return render(self, 'TikTak/login.html', {"form": form, "message": message, 'error': error})
         else:
-            return render(request, 'TikTak/login.html', {'form': form})
+            return render(self, 'TikTak/login.html', {'form': form})
 
 
 '''##################################### Cart section start ##################################'''
-class Shop_сart():
+
+
+class ShopCart:
+
     @login_required(login_url="/users/login")
-    def cart_add(request, ID_Product):
-        cart = Cart(request)
-        quantity = request.POST.get('quantity')
-        size = request.POST.get('size')
+    def cart_add(self, ID_Product):
+        cart = Cart(self)
+        quantity = self.POST.get('quantity')
+        size = self.POST.get('size')
 
         product = Product.objects.get(ID_Product=ID_Product)
         cart.add(product=product, quantity=quantity, size=size, color='black')
         cart.save()
         return redirect("index")
 
-
     @login_required(login_url="/users/login")
-    def item_clear(request, ID_Product):
-        cart = Cart(request)
+    def item_clear(self, ID_Product):
+        cart = Cart(self)
         product = Product.objects.get(ID_Product=ID_Product)
         cart.remove(product)
         return redirect("cart_detail")
 
-
     @login_required(login_url="/users/login")
-    def item_increment(request, key):
-        cart = Cart(request)
+    def item_increment(self, key):
+        cart = Cart(self)
         cart.increment(key=key)
         return redirect("cart_detail")
 
     @login_required(login_url="/users/login")
-    def item_decrement(request, key):
-        cart = Cart(request)
+    def item_decrement(self, key):
+        cart = Cart(self)
         cart.decrement(key=key)
         return redirect("cart_detail")
 
-
     @login_required(login_url="/users/login")
-    def cart_clear(request):
-        cart = Cart(request)
+    def cart_clear(self):
+        cart = Cart(self)
         cart.clear()
         return redirect("cart_detail")
 
-
     @login_required(login_url="/users/login")
-    def cart_detail(request):
+    def cart_detail(self):
         a = []
         b = []
-        cart = Cart(request).cart.items()
-        for key, value in  cart:
+        cart = Cart(self).cart.items()
+        for key, value in cart:
             a.append(value['quantity'])
             b.append(value['price'])
 
@@ -208,11 +199,10 @@ class Shop_сart():
         for i in range(len(quantity)):
             total_sum += quantity[i] * price[i]
 
-        return render(request, 'cart/detail.html', {'total_sum': total_sum})
-
+        return render(self, 'cart/detail.html', {'total_sum': total_sum})
 
     @login_required(login_url='/users/login')
-    def item_remove(request, key):
-        cart = Cart(request)
+    def item_remove(self, key):
+        cart = Cart(self)
         cart.remove(key=key)
         return redirect('cart_detail')

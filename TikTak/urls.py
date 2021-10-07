@@ -6,15 +6,15 @@ from . import views
 
 ProductView = views.ProductView
 RegAndLoginView = views.RegAndLoginView
-Cart = views.Shop_сart
+Cart = views.ShopCart
 
 urlpatterns = [
     path('', ProductView.index, name='index'),
-    path('<key>', ProductView.Shop_view_Category, name='Shop_cat'),
-    path('<int:pk>/', ProductView.Shop_single_view, name='Shop_single'),
-    path('Shop/', ProductView.Shop_view, name='Shop'),
-    path('login/', RegAndLoginView.LoginView, name='login'),
-    path('register/', RegAndLoginView.RegisterView, name='register'),
+    path('<key>', ProductView.shop_view_category, name='Shop_cat'),
+    path('<int:pk>/', ProductView.shop_single_view, name='Shop_single'),
+    path('Shop/', ProductView.shop_view, name='Shop'),
+    path('login/', RegAndLoginView.login_view, name='login'),
+    path('register/', RegAndLoginView.register_view, name='register'),
     path('logout/', authViews.LogoutView.as_view(next_page='index'), name='logout'),
 ]
 
