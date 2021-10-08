@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="col-lg-5 mt-5">
                     <div class="card mb-3">
-                        <img class="card-img img-fluid" src="/{{product.Product_image}}" alt="Card image cap" id="product-detail">
+                        <img class="main-card-img img-fluid" src="{{product.get_first_image.url}}" alt="Card image cap" id="product-detail">
                     </div>
                     <div class="row">
                         <!--Start Controls-->
@@ -70,21 +70,14 @@
                                 <!--First slide-->
                                 <div class="carousel-item active">
                                     <div class="row">
-                                        <div class="col-4">
-                                            <a href="#">
-                                                <img class="card-img img-fluid" src='/{{product.Product_image}}'>
-                                            </a>
-                                        </div>
-                                        <div class="col-4">
-                                            <a href="#">
-                                                <img class="card-img img-fluid" src="/{{product.Product_image}}" alt="Product Image 2">
-                                            </a>
-                                        </div>
-                                        <div class="col-4">
-                                            <a href="#">
-                                                <img class="card-img img-fluid" src="/{{product.Product_image}}" alt="Product Image 3">
-                                            </a>
-                                        </div>
+                                        {% for image in product.images.all %}
+                                            <div class="col-4">
+                                                <a style="cursor: pointer;">
+                                                    <img class="img-fluid" src="{{image.image.url}}" alt="Product Image 2">
+                                                </a>
+                                            </div>
+                                        {% endfor %}
+
                                     </div>
                                 </div>
                                 <!--/.First slide-->
@@ -105,7 +98,7 @@
                 <!-- col end -->
                 <div class="col-lg-7 mt-5">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" style="height: 100%;">
                             <h1 class="h2">{{product.Product_name}}</h1>
 
                             <h6>{{product.for_which_gender}}</h6>

@@ -1,3 +1,5 @@
+import random
+
 from django.db import models
 from multiselectfield import MultiSelectField
 
@@ -15,7 +17,6 @@ class Product(models.Model):
     Product_name = models.CharField(max_length=200)
     product_description = models.CharField(max_length=500)
     Product_price = models.IntegerField()
-    Product_image = models.ImageField(blank=True, upload_to='TikTak/static/img/')
     Product_color = models.CharField(max_length=20)
     Product_brand = models.CharField(max_length=100, default=None)
     Product_characteristics = models.CharField(max_length=1000)
@@ -43,8 +44,7 @@ class Product(models.Model):
                 ('13 лет', '13-y'),
                 ('14 лет (XS)', '14-y'),
                 ('16 лет (S)', '16-y'),
-                ('18 лет (M)', '18-y'),
-            )
+                ('18 лет (M)', '18-y'),)
 
     Product_size = MultiSelectField(choices=Choises)
 
@@ -71,3 +71,15 @@ class Product(models.Model):
         ],
         default=None,
     )
+
+    def get_first_image(self):
+        try:
+            first_image = self.images.first().image
+        except AttributeError:
+            first_image = self
+        return first_image
+
+class ImageGallery(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='TikTak/static/img')
+

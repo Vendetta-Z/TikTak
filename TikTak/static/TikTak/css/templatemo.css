@@ -297,6 +297,10 @@ body, ul, li, p, a, label, input, div {
     height:150px;
 }
 
+.main-card-img{
+    height: 524px;
+}
+
 .card.product-wap:hover .card .product-overlay {
   visibility: visible;
   opacity: 1;

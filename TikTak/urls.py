@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from django.contrib.auth import views as authViews
+from django.contrib.auth import views as auth_views
 from . import views
 
 ProductView = views.ProductView
@@ -15,7 +15,7 @@ urlpatterns = [
     path('Shop/', ProductView.shop_view, name='Shop'),
     path('login/', RegAndLoginView.login_view, name='login'),
     path('register/', RegAndLoginView.register_view, name='register'),
-    path('logout/', authViews.LogoutView.as_view(next_page='index'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
 ]
 
 urlpatterns += [
@@ -27,7 +27,7 @@ urlpatterns += [
     path('cart/cart_clear/', Cart.cart_clear, name='cart_clear'),
     path('cart/cart-detail/', Cart.cart_detail, name='cart_detail'),
 ]
-#urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)

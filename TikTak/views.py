@@ -47,6 +47,7 @@ class ProductView:
         product = Product.objects.all()
 
         if self.GET:
+
             attributes_names = {}
             search_input = self.GET.get('Shop_search_input')
             filter_attributes = self.GET.getlist('orderby')
