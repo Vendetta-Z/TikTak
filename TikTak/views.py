@@ -30,9 +30,9 @@ class ProductView:
         answer_category = key.replace(' ', '')
         product = Product.objects.filter(Product_Category=answer_category)
         Paginator = paginator.Paginator(product, 9)
-        page_number = request.GET.get('page')
+        page_number = self.GET.get('page')
         page_obj = Paginator.get_page(page_number)
-        return render(request, 'TikTak/index.html', {
+        return render(self, 'TikTak/index.html', {
             'product': product,
             'users': User,
             'page_obj': page_obj,
@@ -88,7 +88,7 @@ class ProductView:
         if key == 'All_products':
             product = Product.objects.all()
         Paginator = paginator.Paginator(product, 20)
-        page_number = request.GET.get('page')
+        page_number = self.GET.get('page')
         page_obj = Paginator.get_page(page_number)
         return redirect('Shop')
 
@@ -99,7 +99,7 @@ class RegAndLoginView:
         message = ''
         form = RegisterForm
         if self.POST:
-            form = RegisterForm(request.POST)
+            form = RegisterForm(self.POST)
             if form.is_valid() is not True:
                 name = form.cleaned_data['UserName']
                 email = form.cleaned_data['Email']
