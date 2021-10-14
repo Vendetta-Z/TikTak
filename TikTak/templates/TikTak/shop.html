@@ -49,25 +49,14 @@
     <div class=" py-5 middle-shop-block ">
 
 
-
-
-        <form searching_and_sorting_top_block>
-                    <div class="sorted_to_block d-flex">
-                    <span class="form-control-span">Сортировать по</span>
-                    <select class="form-control" name="fuck">
-                        <option>...</option>
-                        <option>Убыванию цены</a></option>
-                        <option>Возрастанию цены</option>
-                    </select>   
-                    <div class="Shop_search_block">
-                        <input type="text" name="Shop_search_input" placeholder="Найти">
-                        <input type="submit" name="Shop_search_submit" value="Поиск">
-                    </div>
-            </div>
-        </form>
-
-
-
+            <form name="fuck">
+                <div class="sorted_to_block d-flex">
+                        <div class="Shop_search_block">
+                            <input type="text" name="Shop_search_input" placeholder="Найти" >
+                            <input type="submit" name="Shop_search_submit" value="Поиск">
+                        </div>
+                </div>
+            </form>
 
          <div class="categorys_block_shop">
              <form class="OrderBy_form" method="get" action="{% url 'Shop' %}">
@@ -111,6 +100,15 @@
                     </div>    
                 </div>
 
+                
+                <div class="form-control-div">
+                    <span class="form-control-span">Сортировать по</span>
+                    <select class="form-control" name="sort_ascending_and_descending">
+                        <option>...</option>
+                        <option value="-Product_price">Убыванию цены</option>
+                        <option value="Product_price">Возрастанию цены</option>
+                    </select>   
+                </div>
                 <input type="submit" class="EnterFilteringShopListBtn" value="Показать">
              </form>
 

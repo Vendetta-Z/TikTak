@@ -54,6 +54,7 @@ class ProductView:
             brand_to_sorted = self.GET.getlist('manufacture_to_sorted')
             gender_to_sort = self.GET.get('gender_orderby')
             size_to_sort = self.GET.getlist('size_to_sort')
+            sort_ascending_and_descending = self.GET.get('sort_ascending_and_descending')
 
             if filter_attributes:
                 attributes_names.update({'Product_Category__in': filter_attributes})
@@ -63,10 +64,12 @@ class ProductView:
                 attributes_names.update({'for_which_gender': gender_to_sort})
 
             product = Product.objects.filter(**attributes_names)
+            
+            if sort_ascending_and_descending != '...':
+                product = Product.objects.filter(**attributes_names).order_by(sort_ascending_and_descending)
 
             if size_to_sort:
-                size_sort_list = [k for k in product if
-                                  k.Product_size[0] in size_to_sort or k.Product_size[1] in size_to_sort]
+                size_sort_list = [k for k in product if k.Product_size[0] in size_to_sort or k.Product_size[1] in size_to_sort]
                 product = size_sort_list
 
             if search_input:
@@ -85,6 +88,7 @@ class ProductView:
         })
 
     def shop_view_category(self, key):
+        product = Product.objects.filter(Product_Category=key)
         if key == 'All_products':
             product = Product.objects.all()
         Paginator = paginator.Paginator(product, 20)

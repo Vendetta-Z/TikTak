@@ -140,16 +140,20 @@ body, ul, li, p, a, label, input, div {
 }
 
 .form-control-div{
-    width: 95%;
-    background-color: white;
     margin: 5px auto;
     padding: 5px;
+    color:white;
     border-radius: 4px ;
 }
 
+.form-control-div span{
+    display: inline-block;
+}
+
+
 .form-control {
     width: 60%;
-    margin-right: 20%;
+    display: inline-block;
  }
 
 

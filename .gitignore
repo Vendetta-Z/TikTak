@@ -2,3 +2,5 @@
 target/
 *.iml
 .idea/
+
+TikTak/static/img
