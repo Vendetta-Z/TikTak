@@ -79,6 +79,7 @@ class Product(models.Model):
             first_image = self
         return first_image
 
+
 class ImageGallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='TikTak/static/img')

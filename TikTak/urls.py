@@ -6,11 +6,10 @@ from . import views
 
 ProductView = views.ProductView
 RegAndLoginView = views.RegAndLoginView
-Cart = views.ShopCart
+Cart = views.Shop
 
 urlpatterns = [
     path('', ProductView.index, name='index'),
-    path('<key>', ProductView.shop_view_category, name='Shop_cat'),
     path('<int:pk>/', ProductView.shop_single_view, name='Shop_single'),
     path('Shop/', ProductView.shop_view, name='Shop'),
     path('login/', RegAndLoginView.login_view, name='login'),

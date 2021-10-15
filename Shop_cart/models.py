@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from random import randint
 
+
 class Cart(models.Model):
 
     def __init__(self, request):
@@ -25,7 +26,6 @@ class Cart(models.Model):
             cart_item_product / 2 * r
 
         newItem = True
-
         if str(product.ID_Product) not in self.cart.keys():
             self.cart[cart_item_product] = {
                 'userid': self.request.user.id,
@@ -37,9 +37,8 @@ class Cart(models.Model):
                 'size': size,
                 'color': color,
                 'price': product.Product_price,
-                'image': product.Product_image.url,
+                'images': product.get_first_image().url,
             }
-            print(self.cart)
 
             self.save()
         elif size not in self.cart.values():
@@ -55,7 +54,6 @@ class Cart(models.Model):
                 'price': product.Product_price,
                 'image': product.Product_image.url,
             }
-            print(self.cart + '\n')
             self.save()
 
         else:
@@ -63,7 +61,7 @@ class Cart(models.Model):
             newItem = True
 
             self.cart.increment()
-            if newItem == True:
+            if newItem:
                 self.cart[product.ID_Product] = {
                     'userid': self.request.user.id,
                     'product_id': id,
@@ -103,12 +101,10 @@ class Cart(models.Model):
 
         a = self.cart[key]
         quantity = a['quantity']
-        if(int(quantity) > 1):
+        if int(quantity) > 1:
             quantity = int(quantity) - 1
             a['quantity'] = quantity
             self.save()
-
-
 
     def clear(self):
         # empty cart

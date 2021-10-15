@@ -2,12 +2,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.contrib.auth import login as dj_login
 from django.core import paginator
 
+from Shop_cart.models import Cart
 from .forms import LoginForm, RegisterForm
 from .models import Product, get_a_list_without_dublicate
-from .Cart import Cart
 
 product = Product.objects.all()
 
@@ -87,14 +86,8 @@ class ProductView:
             'Size_list': Product.Choises,
         })
 
-    def shop_view_category(self, key):
-        product = Product.objects.filter(Product_Category=key)
-        if key == 'All_products':
-            product = Product.objects.all()
-        Paginator = paginator.Paginator(product, 20)
-        page_number = self.GET.get('page')
-        page_obj = Paginator.get_page(page_number)
-        return redirect('Shop')
+
+'''##################################### SignIn|SignUp section start ##################################'''
 
 
 class RegAndLoginView:
@@ -116,7 +109,7 @@ class RegAndLoginView:
                                       {'error': error, "message": message, "form": form})
                     else:
                         user = User.objects.create_user(name, email, password)
-                        dj_login(self, user)
+                        login(self, user)
                         return redirect('index')
                 else:
                     error = 'Пароли не совпадают'
@@ -150,7 +143,7 @@ class RegAndLoginView:
 '''##################################### Cart section start ##################################'''
 
 
-class ShopCart:
+class Shop:
 
     @login_required(login_url="/users/login")
     def cart_add(self, ID_Product):
@@ -161,7 +154,7 @@ class ShopCart:
         product = Product.objects.get(ID_Product=ID_Product)
         cart.add(product=product, quantity=quantity, size=size, color='black')
         cart.save()
-        return redirect("index")
+        return redirect("Shop")
 
     @login_required(login_url="/users/login")
     def item_clear(self, ID_Product):
@@ -188,7 +181,6 @@ class ShopCart:
         cart.clear()
         return redirect("cart_detail")
 
-    @login_required(login_url="/users/login")
     def cart_detail(self):
         a = []
         b = []

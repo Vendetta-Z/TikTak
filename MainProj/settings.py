@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'TikTak.apps.TiktakConfig',
-    'cart',
+    'Shop_cart',
 
 
 ]
@@ -83,7 +83,8 @@ DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2',
                          'USER': 'ttuser',
                          'PASSWORD': 'tiktak_user',
                          'HOST': '127.0.0.1',
-                         'PORT': '5432', }}
+                         'PORT': '5432',
+                         }}
 
 
 # Password validation

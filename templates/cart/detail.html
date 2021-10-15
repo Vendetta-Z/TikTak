@@ -26,7 +26,7 @@
                 {% for key,value in request.session.cart.items %}
                     <div class="main_cart_div">
                         <div class="card mb-1 product-wap inline-block  rounded-0">
-                                <img class="card-img cart_item_img Product-image_sizing rounded-0 img-fluid" src="{{value.image}}">
+                                <img class="card-img cart_item_img Product-image_sizing rounded-0 img-fluid" src="{{value.images}}">
 
                             <div class="card-body item_cart">
                                 <h4  class="cart_item text-decoration-none">{{value.name}}   ||||||||  {{key}} </h4>
