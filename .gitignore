@@ -3,4 +3,7 @@ target/
 *.iml
 .idea/
 
+
+venv
+
 TikTak/static/img

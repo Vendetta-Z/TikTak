@@ -7,7 +7,7 @@ class GalleryInline(admin.TabularInline):
 
 
 class AdminProduct(admin.ModelAdmin):
-    list_display = ('Product_name', 'product_description', 'Product_price')
+    list_display = ('Product_name', 'product_description', 'Product_price', 'Added_time')
     search_fields = ['Product_name']
     inlines = [GalleryInline]
 

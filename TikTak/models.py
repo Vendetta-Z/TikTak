@@ -1,15 +1,8 @@
+import datetime
 import random
 
 from django.db import models
 from multiselectfield import MultiSelectField
-
-
-def get_a_list_without_dublicate(f):
-    returned_list = []
-    for product in Product.objects.all():
-        a = (product.__getattribute__(f))
-        returned_list.append(a)
-    return set(returned_list)
 
 
 class Product(models.Model):
@@ -20,6 +13,8 @@ class Product(models.Model):
     Product_color = models.CharField(max_length=20)
     Product_brand = models.CharField(max_length=100, default=None)
     Product_characteristics = models.CharField(max_length=1000)
+    Added_time = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.Product_name
@@ -72,6 +67,16 @@ class Product(models.Model):
         default=None,
     )
 
+    def get_a_list_without_dublicate(self, attr_name):
+        returned_list = []
+        for product in Product.objects.all():
+            attr_values = product.__getattribute__(attr_name)
+            returned_list.append(attr_values)
+        return set(returned_list)
+
+    def get_recently_added_products(self, amount):
+        return Product.objects.order_by('-Added_time')[:amount]
+
     def get_first_image(self):
         try:
             first_image = self.images.first().image
@@ -83,4 +88,3 @@ class Product(models.Model):
 class ImageGallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='TikTak/static/img')
-

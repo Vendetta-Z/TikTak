@@ -34,6 +34,3 @@ class UrlTests(TestCase):
             'Password': self.password,
             'ConfirmPass': self.password2})
         self.assertEqual(response.status_code, 200)
-
-
-

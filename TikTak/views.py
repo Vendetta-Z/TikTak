@@ -1,13 +1,11 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core import paginator
 
-from Shop_cart.models import Cart
 from .forms import LoginForm, RegisterForm
-from .models import Product, get_a_list_without_dublicate
-
+from .models import Product
+from Shop_cart.models import Cart
 product = Product.objects.all()
 
 
@@ -19,20 +17,8 @@ class ProductView:
         page_obj = Paginator.get_page(page_number)
 
         return render(self, 'TikTak/index.html', {
-            'product': product,
-            'users': User,
-            'page_obj': page_obj,
-            'Categorys': Product.P_Categorys
-        })
-
-    def view_category(self, key):
-        answer_category = key.replace(' ', '')
-        product = Product.objects.filter(Product_Category=answer_category)
-        Paginator = paginator.Paginator(product, 9)
-        page_number = self.GET.get('page')
-        page_obj = Paginator.get_page(page_number)
-        return render(self, 'TikTak/index.html', {
-            'product': product,
+            'cart_items': Cart.get_items_count(self=self),
+            'recently_added_Product': Product.get_recently_added_products(Product(), 4),  # check how it's work
             'users': User,
             'page_obj': page_obj,
             'Categorys': Product.P_Categorys
@@ -40,7 +26,11 @@ class ProductView:
 
     def shop_single_view(self, pk):
         product = Product.objects.get(ID_Product=pk)
-        return render(self, 'TikTak/shop-single.html', {'product': product, 'size_list': product.Product_size})
+        return render(self, 'TikTak/shop-single.html', {
+            'cart_items': Cart.get_items_count(self=self),
+            'product': product,
+            'size_list': product.Product_size
+        })
 
     def shop_view(self):
         product = Product.objects.all()
@@ -79,10 +69,11 @@ class ProductView:
         page_obj = Paginator.get_page(page_number)
 
         return render(self, 'TikTak/shop.html', {
+            'cart_items': Cart.get_items_count(self=self),
             'product': product,
             'page_obj': page_obj,
             'Categorys': Product.P_Categorys,
-            'Manufactures': get_a_list_without_dublicate('Product_brand'),
+            'Manufactures': Product.get_a_list_without_dublicate(Product(), 'Product_brand'),
             'Size_list': Product.Choises,
         })
 
@@ -113,7 +104,12 @@ class RegAndLoginView:
                         return redirect('index')
                 else:
                     error = 'Пароли не совпадают'
-                    return render(self, 'TikTak/register.html', {'error': error, "message": message, "form": form})
+                    return render(self, 'TikTak/register.html',
+                                  {
+                                      "error": error,
+                                      "message": message,
+                                      "form": form
+                                  })
 
         return render(self, 'TikTak/register.html', {"form": form, "message": message})
 
@@ -138,68 +134,3 @@ class RegAndLoginView:
                 return render(self, 'TikTak/login.html', {"form": form, "message": message, 'error': error})
         else:
             return render(self, 'TikTak/login.html', {'form': form})
-
-
-'''##################################### Cart section start ##################################'''
-
-
-class Shop:
-
-    @login_required(login_url="/users/login")
-    def cart_add(self, ID_Product):
-        cart = Cart(self)
-        quantity = self.POST.get('quantity')
-        size = self.POST.get('size')
-
-        product = Product.objects.get(ID_Product=ID_Product)
-        cart.add(product=product, quantity=quantity, size=size, color='black')
-        cart.save()
-        return redirect("Shop")
-
-    @login_required(login_url="/users/login")
-    def item_clear(self, ID_Product):
-        cart = Cart(self)
-        product = Product.objects.get(ID_Product=ID_Product)
-        cart.remove(product)
-        return redirect("cart_detail")
-
-    @login_required(login_url="/users/login")
-    def item_increment(self, key):
-        cart = Cart(self)
-        cart.increment(key=key)
-        return redirect("cart_detail")
-
-    @login_required(login_url="/users/login")
-    def item_decrement(self, key):
-        cart = Cart(self)
-        cart.decrement(key=key)
-        return redirect("cart_detail")
-
-    @login_required(login_url="/users/login")
-    def cart_clear(self):
-        cart = Cart(self)
-        cart.clear()
-        return redirect("cart_detail")
-
-    def cart_detail(self):
-        a = []
-        b = []
-        cart = Cart(self).cart.items()
-        for key, value in cart:
-            a.append(value['quantity'])
-            b.append(value['price'])
-
-        quantity = [int(item) for item in a]
-        price = [int(item) for item in b]
-
-        total_sum = 0
-        for i in range(len(quantity)):
-            total_sum += quantity[i] * price[i]
-
-        return render(self, 'cart/detail.html', {'total_sum': total_sum})
-
-    @login_required(login_url='/users/login')
-    def item_remove(self, key):
-        cart = Cart(self)
-        cart.remove(key=key)
-        return redirect('cart_detail')

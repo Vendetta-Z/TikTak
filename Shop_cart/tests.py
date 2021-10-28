@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
+
 class UrlTests(TestCase):
 
     def test_cart_homepage(self):

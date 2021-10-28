@@ -29,7 +29,7 @@
                                 <img class="card-img cart_item_img Product-image_sizing rounded-0 img-fluid" src="{{value.images}}">
 
                             <div class="card-body item_cart">
-                                <h4  class="cart_item text-decoration-none">{{value.name}}   ||||||||  {{key}} </h4>
+                                <h4  class="cart_item text-decoration-none">{{value.name}}</h4>
                                 <h6  class="cart_item description">{{value.description}}</h6>
 
                                 <h6 class="cart_item position-absolute quantity">Количество <a class="increment" href="{% url 'item_decrement' key %}">-</a> {{value.quantity}} <a class="increment" href="{% url 'item_increment' key %}">+</a> </h6>

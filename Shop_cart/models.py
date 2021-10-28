@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from random import randint
+from django.contrib.auth import get_user
 
 
 class Cart(models.Model):
@@ -19,9 +20,15 @@ class Cart(models.Model):
         """
         Add a product to the cart or update its quantity.
         """
+
+        for i, j in Cart(self).cart.items():
+            if j['product_id'] == product.ID_Product and j['size'] == size:
+                j['quantity'] = int(j['quantity']) + int(quantity)
+                self.save()
+                return True
+
         id_Product = product.ID_Product
-        r = randint(1, 5000)
-        cart_item_product = (id_Product * id_Product) / 2 * r
+        cart_item_product = (id_Product * id_Product) / 2 * randint(1, 5000)
         if cart_item_product in self.cart:
             cart_item_product / 2 * r
 
@@ -44,7 +51,7 @@ class Cart(models.Model):
         elif size not in self.cart.values():
             self.cart[cart_item_product] = {
                 'userid': self.request.user.id,
-                'product_id': id,
+                'product_id': id_Product,
                 'name': product.Product_name,
                 'description': product.product_description,
                 'brand': product.Product_brand,
@@ -64,7 +71,7 @@ class Cart(models.Model):
             if newItem:
                 self.cart[product.ID_Product] = {
                     'userid': self.request.user.id,
-                    'product_id': id,
+                    'product_id': id_Product,
                     'name': product.Product_name,
                     'quantity': 1,
                     'size': size,
@@ -110,3 +117,6 @@ class Cart(models.Model):
         # empty cart
         self.session[settings.CART_SESSION_ID] = {}
         self.session.modified = True
+
+    def get_items_count(self):
+        return len(Cart(self).cart.items())

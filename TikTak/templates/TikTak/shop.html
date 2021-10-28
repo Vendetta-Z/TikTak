@@ -78,7 +78,7 @@
 
 
                 <div class="Sorted_lists_div">
-                    <span >Размер</span>
+                    <span >Размеры</span>
                     <div class="list-with-manufacturer">
                         <ul>
                             {% for key,value in Size_list%}
@@ -90,12 +90,13 @@
                 
 
                 <div class="Sorted_lists_div">
-                    <span >Производитель</span>
+                    <span >Производители</span>
                     <div class="list-with-manufacturer">
                         <ul>
                             {% for M in Manufactures%}
                             <label><input type="checkbox" name="manufacture_to_sorted" value="{{M}}" >{{M}}</label>
                             {% endfor %}
+
                         </ul>
                     </div>    
                 </div>
@@ -122,7 +123,7 @@
                         <div class="col-md-3 product_list_item_block">
                             <div class="card mb-3 product-wap  rounded-0">
                                 <div class="card rounded-1">
-                                    <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.get_first_image.url}}">
+                                    <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.images.first.image.url}}">
 
                                     <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                         <ul class="list-unstyled">
