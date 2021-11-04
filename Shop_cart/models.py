@@ -22,21 +22,21 @@ class Cart(models.Model):
         """
 
         for i, j in Cart(self).cart.items():
-            if j['product_id'] == product.ID_Product and j['size'] == size:
+            if j['product_id'] == product.id and j['size'] == size:
                 j['quantity'] = int(j['quantity']) + int(quantity)
                 self.save()
                 return True
 
-        id_Product = product.ID_Product
-        cart_item_product = (id_Product * id_Product) / 2 * randint(1, 5000)
+        id = product.id
+        cart_item_product = (id * id) / 2 * randint(1, 5000)
         if cart_item_product in self.cart:
             cart_item_product / 2 * r
 
         newItem = True
-        if str(product.ID_Product) not in self.cart.keys():
+        if str(product.id) not in self.cart.keys():
             self.cart[cart_item_product] = {
                 'userid': self.request.user.id,
-                'product_id': id_Product,
+                'product_id': id,
                 'name': product.Product_name,
                 'description': product.product_description,
                 'brand': product.Product_brand,
@@ -51,7 +51,7 @@ class Cart(models.Model):
         elif size not in self.cart.values():
             self.cart[cart_item_product] = {
                 'userid': self.request.user.id,
-                'product_id': id_Product,
+                'product_id': id,
                 'name': product.Product_name,
                 'description': product.product_description,
                 'brand': product.Product_brand,
@@ -69,9 +69,9 @@ class Cart(models.Model):
 
             self.cart.increment()
             if newItem:
-                self.cart[product.ID_Product] = {
+                self.cart[product.id] = {
                     'userid': self.request.user.id,
-                    'product_id': id_Product,
+                    'product_id': id,
                     'name': product.Product_name,
                     'quantity': 1,
                     'size': size,

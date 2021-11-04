@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core import paginator
+from django.contrib.auth import get_user_model
 
 from .forms import LoginForm, RegisterForm
 from .models import Product
 from Shop_cart.models import Cart
+from like.services import *
+from like.models import Like
 product = Product.objects.all()
 
 
@@ -25,7 +28,7 @@ class ProductView:
         })
 
     def shop_single_view(self, pk):
-        product = Product.objects.get(ID_Product=pk)
+        product = Product.objects.get(id=pk)
         return render(self, 'TikTak/shop-single.html', {
             'cart_items': Cart.get_items_count(self=self),
             'product': product,
@@ -42,7 +45,7 @@ class ProductView:
             filter_attributes = self.GET.getlist('orderby')
             brand_to_sorted = self.GET.getlist('manufacture_to_sorted')
             gender_to_sort = self.GET.get('gender_orderby')
-            size_to_sort = self.GET.getlist('size_to_sort')
+            sort_size_list = self.GET.getlist('size_to_sort')
             sort_ascending_and_descending = self.GET.get('sort_ascending_and_descending')
 
             if filter_attributes:
@@ -57,9 +60,13 @@ class ProductView:
             if sort_ascending_and_descending != '...':
                 product = Product.objects.filter(**attributes_names).order_by(sort_ascending_and_descending)
 
-            if size_to_sort:
-                size_sort_list = [k for k in product if k.Product_size[0] in size_to_sort or k.Product_size[1] in size_to_sort]
-                product = size_sort_list
+            if sort_size_list:
+                sorted_list_by_size = []
+                for P in product:
+                    for size in P.Product_size:
+                        if size in sort_size_list:
+                            sorted_list_by_size.append(P)
+                product = list(set(sorted_list_by_size))
 
             if search_input:
                 product = product.filter(Product_name__icontains=search_input)

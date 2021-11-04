@@ -3,10 +3,12 @@ import random
 
 from django.db import models
 from multiselectfield import MultiSelectField
+from django.contrib.contenttypes.fields import GenericRelation
+from like.models import Like
 
 
 class Product(models.Model):
-    ID_Product = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     Product_name = models.CharField(max_length=200)
     product_description = models.CharField(max_length=500)
     Product_price = models.IntegerField()
@@ -14,7 +16,7 @@ class Product(models.Model):
     Product_brand = models.CharField(max_length=100, default=None)
     Product_characteristics = models.CharField(max_length=1000)
     Added_time = models.DateTimeField(auto_now=True)
-
+    likes = GenericRelation(Like)
 
     def __str__(self):
         return self.Product_name
@@ -66,6 +68,10 @@ class Product(models.Model):
         ],
         default=None,
     )
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
 
     def get_a_list_without_dublicate(self, attr_name):
         returned_list = []

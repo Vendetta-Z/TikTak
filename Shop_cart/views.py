@@ -8,20 +8,20 @@ from TikTak.models import Product
 class CartView:
 
     @login_required(login_url="/users/login")
-    def cart_add(self, ID_Product):
+    def cart_add(self, id):
         cart = Cart(self)
         quantity = self.POST.get('quantity')
         size = self.POST.get('size')
 
-        product = Product.objects.get(ID_Product=ID_Product)
+        product = Product.objects.get(id=id)
         cart.add(product=product, quantity=quantity, size=size, color='black')
         cart.save()
         return redirect("Shop")
 
     @login_required(login_url="/users/login")
-    def item_clear(self, ID_Product):
+    def item_clear(self, id):
         cart = Cart(self)
-        product = Product.objects.get(ID_Product=ID_Product)
+        product = Product.objects.get(id=id)
         cart.remove(product)
         return redirect("cart_detail")
 

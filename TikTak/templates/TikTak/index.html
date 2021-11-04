@@ -146,17 +146,21 @@
                                 <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.get_first_image.url}}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white" href="{{Product.ID_Product}}/"><i class="far fa-heart"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.ID_Product}}/"><i class="far fa-eye"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.ID_Product}}/"><i class="fas fa-cart-plus"></i></a></li>
+                                        <li><a class="btn btn-success text-white" href="{{Product.id}}/"><i class="far fa-heart"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="fas fa-cart-plus"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <a href="{{Product.ID_Product}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
+                                <a href="{{Product.id}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a><br>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                     <li>M/L/X/XL</li>
-
+                                    <li><a class="fas fa-heart" style="color:red; cursor: pointer;text-decoration: none;"></a><a>{{Product.total_likes}}</a></li>
+                                    <form action="" method="post" >
+                                        {% csrf_token %}
+                                        <button class="fas fa-heart" style="color:red; cursor: pointer;text-decoration: none;" type="submit" >like</button>
+                                    </form>
                                 </ul>
                                 <p class="text-center mb-0 price">{{Product.Product_price}} p.</p>
                             </div>
@@ -184,14 +188,14 @@
                                 <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.get_first_image.url}}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white" href="{{Product.ID_Product}}/"><i class="far fa-heart"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.ID_Product}}/"><i class="far fa-eye"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.ID_Product}}/"><i class="fas fa-cart-plus"></i></a></li>
+                                        <li><a class="btn btn-success text-white" href="{{Product.id}}/"><i class="far fa-heart"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="fas fa-cart-plus"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <a href="{{Product.ID_Product}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
+                                <a href="{{Product.id}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                     <li>M/L/X/XL</li>
 

@@ -130,7 +130,7 @@
                                 <li>Значение 1</li>
                             </ul>
 
-                            <form action="{% url 'cart_add' product.ID_Product%}" method="post" >
+                            <form action="{% url 'cart_add' product.id%}" method="post" >
                                 {% csrf_token %}
                                 <input type="hidden" name="product-title" value="Activewear">
                                 <div class="row">

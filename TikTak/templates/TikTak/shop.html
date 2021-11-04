@@ -64,17 +64,14 @@
                 
                 {% for key, value in Categorys%}    
                     <label class="OrderBy_form_checkbox fuck">
-                        <input type="checkbox" name="orderby" value="{{key}}" ><span>{{key}}  ({{key|length}})</span>
+                        <input type="checkbox" name="orderby" value="{{key}}" ><span>{{key}}</span>
                     </label>
                 {% endfor %}
 
                 <label  class="OrderBy_form_checkbox" id="ForGirlsBgColor">
                         <input class="Cat_for_Girls" type="checkbox" name="gender_orderby" value="Для девочек" ><span>Для девочек</span></label>
                 <label  class="OrderBy_form_checkbox " id="ForBoysBgColor" >
-                        <input type="checkbox" name="gender_orderby" value="Для мальчиков" ><span>Для мальчиков</span></label>
-
-                <a style="width:95%; margin: 4px ;" class="text-center" href="/All_products" >Показать все товары</a>
-                
+                        <input type="checkbox" name="gender_orderby" value="Для мальчиков" ><span>Для мальчиков</span></label>                
 
 
                 <div class="Sorted_lists_div">
@@ -127,14 +124,14 @@
 
                                     <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                         <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="/{{Product.ID_Product}}/"><i class="far fa-heart"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="/{{Product.ID_Product}}/"><i class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="/{{Product.ID_Product}}/"><i class="fas fa-cart-plus"></i></a></li>
+                                            <li><a class="btn btn-success text-white" href="/{{Product.id}}/"><i class="far fa-heart"></i></a></li>
+                                            <li><a class="btn btn-success text-white mt-2" href="/{{Product.id}}/"><i class="far fa-eye"></i></a></li>
+                                            <li><a class="btn btn-success text-white mt-2" href="/{{Product.id}}/"><i class="fas fa-cart-plus"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <a href="/{{Product.ID_Product}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
+                                    <a href="/{{Product.id}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
                                     <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                         <li>M/L/X/XL</li>
                                         <li class="pt-2">
@@ -151,7 +148,7 @@
                         </div>
                     {% endfor %}
                 {% else %}
-                         <div ">
+                         <div>
                             <h1 style="width: 100%; color: white; text-align: center;">Ничего не найдено!</h1>
                         </div>
                 {% endif %}
