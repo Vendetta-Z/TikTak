@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
+from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core import paginator
 from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
+from django.http import JsonResponse
 
 from .forms import LoginForm, RegisterForm
-from .models import Product
+from .models import Product, Like
 from Shop_cart.models import Cart
-from like.services import *
-from like.models import Like
+
 product = Product.objects.all()
 
 
@@ -18,6 +20,14 @@ class ProductView:
         Paginator = paginator.Paginator(product, 9)
         page_number = self.GET.get('page')
         page_obj = Paginator.get_page(page_number)
+
+        user = get_user_model()
+        example_like_product = Product.objects.get(id=11)
+        Product_type = ContentType.objects.get_for_model(example_like_product)
+        like = Like.objects.create(content_type=Product_type, object_id=example_like_product.id, user=self.user)
+
+        print(example_like_product.total_likes)
+        print('=====================================')
 
         return render(self, 'TikTak/index.html', {
             'cart_items': Cart.get_items_count(self=self),
@@ -56,7 +66,7 @@ class ProductView:
                 attributes_names.update({'for_which_gender': gender_to_sort})
 
             product = Product.objects.filter(**attributes_names)
-            
+
             if sort_ascending_and_descending != '...':
                 product = Product.objects.filter(**attributes_names).order_by(sort_ascending_and_descending)
 
@@ -83,6 +93,15 @@ class ProductView:
             'Manufactures': Product.get_a_list_without_dublicate(Product(), 'Product_brand'),
             'Size_list': Product.Choises,
         })
+
+
+class DynamicProductView(View):
+
+    def add_like(self, *args, **kwargs):
+        like_product = Product.objects.get(id=pk)
+        Product_type = ContentType.objects.get_for_model(like_product)
+        Like.objects.filter(content_type=Product_type, object_id=like_product.id, user=self.user).delete()
+
 
 
 '''##################################### SignIn|SignUp section start ##################################'''

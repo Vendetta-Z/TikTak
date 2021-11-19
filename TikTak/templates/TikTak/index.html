@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="ru">
+<html lang="rus">
 
 <head>
     <title>TikTak |Home</title>
@@ -146,7 +146,8 @@
                                 <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.get_first_image.url}}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white" href="{{Product.id}}/"><i class="far fa-heart"></i></a></li>
+                                        <li><a class="btn btn-success text-white" ><i class="far fa-heart"></i></a></li>
+                                        <li><p class="btn btn-success text-white" onclick="Like_product_btn()" id='Like_product_btn' Product_id='{{Product.id}}'><i class="far fa-heart"></i></p></li>
                                         <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="far fa-eye"></i></a></li>
                                         <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="fas fa-cart-plus"></i></a></li>
                                     </ul>
@@ -157,10 +158,8 @@
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                     <li>M/L/X/XL</li>
                                     <li><a class="fas fa-heart" style="color:red; cursor: pointer;text-decoration: none;"></a><a>{{Product.total_likes}}</a></li>
-                                    <form action="" method="post" >
-                                        {% csrf_token %}
-                                        <button class="fas fa-heart" style="color:red; cursor: pointer;text-decoration: none;" type="submit" >like</button>
-                                    </form>
+
+
                                 </ul>
                                 <p class="text-center mb-0 price">{{Product.Product_price}} p.</p>
                             </div>
@@ -287,13 +286,34 @@
     {% include './Footer.html'%}
     <!-- End Footer -->
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="{% static 'TikTak/js/jquery-1.11.0.min.js' %}"></script>
     <script src="{% static 'TikTak/js/jquery-migrate-1.2.1.min.js' %}"></script>
     <script src="{% static 'TikTak/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'TikTak/js/templatemo.js' %}"></script>
     <script src="{% static 'TikTak/js/custom.js' %}"></script>
 
+    <script>
+
+        function Like_product_btn(){
+            let Like_btn_by_id = document.getElementById('Like_product_btn')
+            let Product_id = Like_btn_by_id.getAttribute('Product_id')
+            let data = {
+                Product_id: Product_id
+                }
+
+           $.ajax({
+                method:'GET',
+                dataType:'json',
+                data: data,
+                url: '{% url "add_product_like" %}',
+                success:function(data){
+                    console.log(data)
+                }
+            })
+           }
+
+    </script>
 
 </body>
 

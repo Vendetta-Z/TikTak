@@ -3,9 +3,9 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
-from like.services import *
 
 ProductView = views.ProductView
+DynamicProductView = views.DynamicProductView
 RegAndLoginView = views.RegAndLoginView
 
 
@@ -17,6 +17,7 @@ urlpatterns = [
     path('register/', RegAndLoginView.register_view, name='register'),
     path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
     path('cart/', include('Shop_cart.urls')),
+    path('add_like', DynamicProductView.add_like, name='add_product_like')
 ]
 
 if settings.DEBUG:

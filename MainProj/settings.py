@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'TikTak.apps.TiktakConfig',
     'Shop_cart',
-    'like'
 ]
 
 
