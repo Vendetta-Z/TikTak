@@ -64,9 +64,9 @@
                             <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">{{cart_items}}</span>
                         </a>
 
-                            <a class="nav-icon position-relative text-decoration-none" href="{% url 'register' %}">
+                            <a class="nav-icon position-relative text-decoration-none" href="{% url 'Profile' %}">
                                 <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">1212 </span>
+                                <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">{{Liked_goods_count}}</span>
                             </a>
 
                             <a class="nav-icon top_navbar_username position-relative text-decoration-none" href="{% url 'logout' %}">{{ user.username}} | выйти </a>

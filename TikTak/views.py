@@ -6,6 +6,10 @@ from django.core import paginator
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.http import JsonResponse
+import json
+from django.core.serializers import serialize
+
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import LoginForm, RegisterForm
 from .models import Product, Like
@@ -21,31 +25,42 @@ class ProductView:
         page_number = self.GET.get('page')
         page_obj = Paginator.get_page(page_number)
 
-        user = get_user_model()
-        example_like_product = Product.objects.get(id=11)
-        Product_type = ContentType.objects.get_for_model(example_like_product)
-        like = Like.objects.create(content_type=Product_type, object_id=example_like_product.id, user=self.user)
-
-        print(example_like_product.total_likes)
-        print('=====================================')
+        id_of_liked_goods = Like.objects.filter(user=self.user)
+        liked_product = []
+        for i in id_of_liked_goods:
+            liked_product.append(Product.objects.get(id=i.object_id))
 
         return render(self, 'TikTak/index.html', {
             'cart_items': Cart.get_items_count(self=self),
             'recently_added_Product': Product.get_recently_added_products(Product(), 4),  # check how it's work
             'users': User,
+            'Liked_goods_count': len(liked_product),
             'page_obj': page_obj,
             'Categorys': Product.P_Categorys
         })
 
     def shop_single_view(self, pk):
+
+        id_of_liked_goods = Like.objects.filter(user=self.user)
+        liked_product = []
+        for i in id_of_liked_goods:
+            liked_product.append(Product.objects.get(id=i.object_id))
+
         product = Product.objects.get(id=pk)
         return render(self, 'TikTak/shop-single.html', {
             'cart_items': Cart.get_items_count(self=self),
             'product': product,
+            'Liked_goods_count': len(liked_product),
             'size_list': product.Product_size
         })
 
     def shop_view(self):
+
+        id_of_liked_goods = Like.objects.filter(user=self.user)
+        liked_product = []
+        for i in id_of_liked_goods:
+            liked_product.append(Product.objects.get(id=i.object_id))
+
         product = Product.objects.all()
 
         if self.GET:
@@ -90,20 +105,55 @@ class ProductView:
             'product': product,
             'page_obj': page_obj,
             'Categorys': Product.P_Categorys,
+            'Liked_goods_count': len(liked_product),
             'Manufactures': Product.get_a_list_without_dublicate(Product(), 'Product_brand'),
             'Size_list': Product.Choises,
         })
 
+    def Profile(self):
+        id_of_liked_goods = Like.objects.filter(user=self.user)
+        liked_product = []
+        for i in id_of_liked_goods:
+            liked_product.append(Product.objects.get(id=i.object_id))
+
+        return render(self, 'TikTak/Profile.html', {
+            'Like_product': liked_product,
+            'Liked_goods_count': len(liked_product),
+            'cart_items': Cart.get_items_count(self=self),
+        })
+
 
 class DynamicProductView(View):
-
+    @csrf_exempt
     def add_like(self, *args, **kwargs):
+        pk = self.GET.get('Product_id')
         like_product = Product.objects.get(id=pk)
         Product_type = ContentType.objects.get_for_model(like_product)
-        Like.objects.filter(content_type=Product_type, object_id=like_product.id, user=self.user).delete()
+        Like.objects.create(content_type=Product_type, object_id=like_product.id, user=self.user)
+        Likes_count = Like.objects.filter(user=self.user, object_id=pk)
+        if len(Likes_count) > 1:
+            Like.objects.filter(user=self.user, object_id=pk).delete()
+            data = {
+                'one': 'Product successful unliked',
+                'two': len(Like.objects.filter(object_id=pk, user=self.user))}
+            return JsonResponse(data, safe=False)
+        else:
+            data = {
+                'one': [(serialize('json', (Product.get_recently_added_products(Product(), 4))))],
+                'two': len(Like.objects.filter(object_id=pk, user=self.user))}
+            return JsonResponse(data, safe=False)
 
-
-
+    def is_liked(self):
+        Product_id = self.GET.get('Product_id')
+        likes_count = Like.objects.filter(object_id=Product_id, user=self.user)
+        print(likes_count)
+        print(Product_id)
+        if len(likes_count) != 0:
+            print('Товар лайкнут')
+            return JsonResponse({'is_liked': 'True'}, safe=False)
+        else:
+            print('Товар не лайкнут ')
+            return JsonResponse({'is_liked': 'False'}, safe=False)
 '''##################################### SignIn|SignUp section start ##################################'''
 
 

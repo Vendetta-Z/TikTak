@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <title>TikTak |Profile</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="{% static 'TikTak/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'TikTak/img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'TikTak/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.min.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/custom.css' %}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'TikTak/css/fontawesome.min.css' %}">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{% static 'TikTak/js/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/jquery-migrate-1.2.1.min.js' %}"></script>
+
+</head>
+
+{% include './header.html'%}
+<body>Like Product list:
+<div class="row">
+            <div class="row" >
+                {% for Product in Like_product %}
+                    <div class="col-md-3 recently_product">
+                        <div class="card mb-4 product-wap  rounded-0">
+                            <div class="card rounded-1">
+                                <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.get_first_image.url}}">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                         <li><p class="btn btn-success text-white"
+                                               onclick="Like_product_btn({{Product.id}})"
+                                               id='Like_product_btn_id_{{Product.id}}'
+                                               onload="is_like()"
+                                               Product_id='{{Product.id}}'><i class="far fa-heart"></i></p></li>
+
+                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="fas fa-cart-plus"></i></a></li>
+                                    </ul>
+                                        <script>
+                                            $.ajax({
+                                                method:'GET',
+                                                dataType:'json',
+                                                data: {'Product_id': {{Product.id}}},
+                                                url: '{% url "is_liked" %}',
+                                                success:function(data){
+                                                    if (data['is_liked'] == 'True'){
+                                                        $('#Like_product_btn_id_'+'{{Product.id}}').html('&#128147')
+                                                    }
+                                                    else{
+                                                        $('#Like_product_btn'+'{{Product.id}}').html( '<i class="far fa-heart"></i>' )
+                                                    }
+
+                                                }
+                                            })
+                                        </script>
+
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{Product.id}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a><br>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                    <li>M/L/X/XL</li>
+                                    <li><a class="fas fa-heart" style="color:red; cursor: pointer;text-decoration: none;"></a><a id="Product_{{Product.id}}_likes">{{Product.total_likes}}</a></li>
+                                    <li><p style="cursor:pointer;" onclick="Add_like">Add</p> </li>
+                                </ul>
+                                <p class="text-center mb-0 price">{{Product.Product_price}} p.</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+</body>
+</html>

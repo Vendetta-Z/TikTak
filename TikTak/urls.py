@@ -13,11 +13,13 @@ urlpatterns = [
     path('', ProductView.index, name='index'),
     path('<int:pk>/', ProductView.shop_single_view, name='Shop_single'),
     path('Shop/', ProductView.shop_view, name='Shop'),
+    path('Profile/', ProductView.Profile, name='Profile'),
     path('login/', RegAndLoginView.login_view, name='login'),
     path('register/', RegAndLoginView.register_view, name='register'),
     path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
     path('cart/', include('Shop_cart.urls')),
-    path('add_like', DynamicProductView.add_like, name='add_product_like')
+    path('add_like', DynamicProductView.add_like, name='add_product_like'),
+    path('is_liked', DynamicProductView.is_liked, name='is_liked'),
 ]
 
 if settings.DEBUG:
