@@ -98,7 +98,7 @@ class Product(models.Model):
             first_image = self.images.first().image
         except AttributeError:
             first_image = self
-        return first_image
+        return first_image.url
 
 
 class ImageGallery(models.Model):
