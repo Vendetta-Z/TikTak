@@ -1,3 +1,23 @@
-/*
-Custom Css
-*/
+.add_new_product_btn{
+    text-decoration:none;
+    color:black;
+    width:230px;
+    height:30px;
+}
+
+.add_new_product_btn p{
+    width:230px;
+    height:30px;
+    border:none;
+    border:1px solid black;
+    border-radius:5px;
+    margin:15px auto;
+    text-align:center;
+}
+
+.add_new_product_btn:hover p{
+    background:#59AB6E;
+    color:white;
+    transition:0.3s;
+
+}

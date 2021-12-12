@@ -21,7 +21,7 @@ product = Product.objects.all()
 class ProductView:
 
     def index(self):
-        Paginator = paginator.Paginator(product, 9)
+        Paginator = paginator.Paginator(Product.objects.order_by('likes'), 9)
         page_number = self.GET.get('page')
         page_obj = Paginator.get_page(page_number)
 
@@ -134,6 +134,8 @@ class DynamicProductView(View):
         Like.objects.create(content_type=Product_type, object_id=like_product.id, user=self.user)
         Likes_count = Like.objects.filter(user=self.user, object_id=pk)
         if len(Likes_count) > 1:
+            ''''GET /add_like?Product_id=12&DLP=1 HTTP/1.1" 200 865 '''
+            ''' GET /add_like?Product_id=12&DLP=1 HTTP/1.1" 200 865 '''
             if Data_code == '1':
                 Like.objects.filter(user=self.user, object_id=pk).delete()
                 all_products_liked_by_the_user = []

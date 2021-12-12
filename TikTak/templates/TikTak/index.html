@@ -25,6 +25,10 @@
     <script src="{% static 'TikTak/js/jquery-1.11.0.min.js' %}"></script>
     <script src="{% static 'TikTak/js/jquery-migrate-1.2.1.min.js' %}"></script>
 
+    <script src="{% static 'TikTak/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/templatemo.js' %}"></script>
+    <script src="{% static 'TikTak/js/script.js' %}"></script>
+
 </head>
 
 <body>
@@ -199,7 +203,7 @@
     <section class="bg-light">
         <div class="container py-5">
             <div class="col-lg-3 categorys_block">
-            <h1 class="h2 pb-4">Категории товаров </h1>
+            <h1 class="h2 pb-4">Популярные товары </h1>
         </div>
 
 
@@ -311,56 +315,6 @@
     <!-- Start Footer -->
     {% include './Footer.html'%}
     <!-- End Footer -->
-    <script src="{% static 'TikTak/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'TikTak/js/templatemo.js' %}"></script>
-    <script src="{% static 'TikTak/js/custom.js' %}"></script>
-    <script>
-
-        function Like_check(id){
-            $.ajax({
-                method:'GET',
-                dataType:'json',
-                data: {'Product_id': id},
-                url: '{% url "is_liked" %}',
-                success:function(data){
-                    if (data['is_liked'] == 'True'){
-                        $('#Like_product_btn').html('&#128147')
-                    }
-                    else{
-                        $('#Like_product_btn').html( '<i class="far fa-heart"></i>' )
-                    }
-
-                }
-            })
-        }
-
-
-        function Like_product_btn(id){
-            let Like_btn_by_id = document.getElementById('Like_product_btn_id_' + 'id')
-            let Product_id = id
-            let data = {
-                Product_id: Product_id
-                }
-
-           $.ajax({
-                method:'GET',
-                dataType:'json',
-                data: data,
-                url: '{% url "add_product_like" %}',
-                success:function(data){
-                    $('#Product_'+id+'_likes').text(data['two'])
-                    if (data['one'] == 'Product successful unliked'){
-                        $('#Like_product_btn_id_'+ id ).html('<i class="far fa-heart"></i>')
-                    }
-                    else{
-                        $('#Like_product_btn_id_'+ id).html('&#128147')
-                    }
-                }
-            })
-           }
-
-    </script>
-
 </body>
 
 </html>
