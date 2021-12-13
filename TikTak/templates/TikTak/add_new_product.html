@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="rus">
+{% load static %}
+<head>
+    <title>TikTak |Profile</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="apple-touch-icon" href="{% static 'TikTak/img/apple-icon.png' %}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'TikTak/img/favicon.ico' %}"/>
+
+    <link rel="stylesheet" href="{% static 'TikTak/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.css' %}"/>
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'TikTak/css/custom.css' %}"/>
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'TikTak/css/fontawesome.min.css' %}">
+
+    <script src="{% static 'TikTak/js/script.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{% static 'TikTak/js/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/jquery-migrate-1.2.1.min.js' %}"></script>
+</head>
+<body>
+{% include './Header.html'%}
+
+<div>
+<h1>Добавление нового товара </h1>
+
+<label>Загрузите изображения товара </label>
+
+<label>Название товара <input type="text" name=""></label></label><br>
+<label>описание товара  <input type="text" name=""></label></label><br>
+<label>цена товара  <input type="text" name=""></label></label><br>
+<label>размеры товара  <input type="text" name=""></label></label><br>
+<label>цвет <input type="text" name=""></label></label><br>
+<label>Характеристики <input type="text" name=""></label></label><br>
+
+
+</div>
+
+{% include './footer.html'%}
+</body>
+</html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="rus">
+<html lang="ru">
 
 <head>
     <title>TikTak |Home</title>
@@ -149,10 +149,10 @@
         <div class="row">
             <div class="row" >
                 {% for Product in recently_added_Product %}
-                    <div class="col-md-3 recently_product">
-                        <div class="card mb-4 product-wap  rounded-0">
-                            <div class="card rounded-1">
-                                <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.get_first_image}}">
+                <div class="col-md-3 recently_product">
+                    <div class="card mb-4 product-wap  rounded-0">
+                        <div class="card rounded-1">
+                            <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.get_first_image}}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
                                          <li><p class="btn btn-success text-white"
@@ -169,7 +169,7 @@
                                                 method:'GET',
                                                 dataType:'json',
                                                 data: {'Product_id': {{Product.id}}},
-                                                url: '{% url "is_liked" %}',
+                                                url: '{% url 'is_liked' %}',
                                                 success:function(data){
                                                     if (data['is_liked'] == 'True'){
                                                         $('#Like_product_btn_id_'+'{{Product.id}}').html('&#128147')
@@ -189,14 +189,16 @@
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                     <li>M/L/X/XL</li>
                                     <li><a class="fas fa-heart" style="color:red; cursor: pointer;text-decoration: none;"></a><a id="Product_{{Product.id}}_likes">{{Product.total_likes}}</a></li>
-                                    <li><p style="cursor:pointer;" onclick="Add_like">Add</p> </li>
+                                    <li><p style="cursor:pointer;" >Add</p> </li>
                                 </ul>
                                 <p class="text-center mb-0 price">{{Product.Product_price}} p.</p>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
+        </div>
     </section>
 
 

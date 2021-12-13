@@ -9,7 +9,7 @@ function Like_product_btn(id){
         method:'GET',
         dataType:'json',
         data: data,
-        url: '/add_like',
+        url: 'Like/add_like/',
         success:function(data){
             $('#Product_'+id+'_likes').text(data['two'])
             if (data['one'] == 'Product successful unliked'){
@@ -31,7 +31,7 @@ function Like_product_btn_remove(id){
         method:'GET',
         dataType:'json',
         data: {'Product_id':id, 'DLP':'1' },
-        url: '/add_like',
+        url: '/Like/add_like/',
         success:function(data){
         data['Like_product']
 
