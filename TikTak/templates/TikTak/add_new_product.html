@@ -27,18 +27,247 @@
 <body>
 {% include './Header.html'%}
 
+<style type="text/css">
+
+    .submit_btn{
+        width: 20%;
+        position: relative;
+        left: 40%;
+    }
+
+    .Django_postform_fields_div{
+        width: 80%;
+        border:2px solid black;
+        background-color: #212934;
+        color:white;
+        font-size: 12px!important;
+        margin: auto;
+    }
+    .Django_postform_fields_div input{
+        display: inline-block;
+        width: 300px;
+    }
+    .Django_postform_fields_div p{
+        width: 200px;
+        display: inline-block;
+        margin: 10px;
+        font-weight: 500!important;
+    }
+    .Django_postform_fields_div ul{
+        width: 29%;
+        border:2px solid black;
+        display: block;
+        list-style: none;
+        padding: 5px ;
+        margin: 5px;
+    }
+    .Django_postform_fields_div li{
+        width: 29%;
+        margin: 5px;
+        display: inline-block;
+    }
+    .Django_postform_fields_div ul input{
+        width: 25%;
+        height: 20px;
+        border:2px solid black;
+        display: inline-block;
+    }
+
+    .Django_postform_fields_div ul label{
+        width: 100px;
+        border:2px solid black;
+        display: inline-block;
+        background-color: #59AB6E;
+        margin: 5px auto;
+        margin-bottom: 5px;
+
+    }
+    .Django_postform_fields_div ul label:hover{
+        cursor: pointer;
+        background-color: white;
+        color: black
+    }
+    
+
+
+
+    .Django_formset_fields_div{
+        background-color: #212529;
+        width: 40%;
+        margin: 20px auto;
+        border: 4px solid #59AB6E;
+        border-radius: 10px;
+    }
+    .Django_formset_fields_div input{
+        width: 95%;        
+    }
+
+    
+    input{
+        display: inline-block;
+        background-color:grey;;
+        color: white;
+        text-align: center;
+        width: 430px;
+        padding: 5px;
+        height: 40px;
+        margin: 10px;
+        border: 3px solid #59AB6E;
+        border-radius: 5px;
+        font-weight: bold!important;
+
+    }
+    input:hover{
+        background-color: white;
+        transition: 0.4s;
+        cursor: pointer;
+        color:black !important;
+    }
+</style>
+
 <div>
-<h1>Добавление нового товара </h1>
+    <h1>Добавление нового товара </h1>
 
-<label>Загрузите изображения товара </label>
+{{ form.non_field_errors }}
 
-<label>Название товара <input type="text" name=""></label></label><br>
-<label>описание товара  <input type="text" name=""></label></label><br>
-<label>цена товара  <input type="text" name=""></label></label><br>
-<label>размеры товара  <input type="text" name=""></label></label><br>
-<label>цвет <input type="text" name=""></label></label><br>
-<label>Характеристики <input type="text" name=""></label></label><br>
+<form enctype= multipart/form-data id="post_form" method="POST" action="{% url 'A_N_P' %}">
+{% csrf_token %}
 
+
+    <!-- <div class="Django_postform_fields_div">
+    {% for field in postForm %}
+        <p>{{field.name}}</p>{{ field }} <br />
+    {% endfor %}
+    </div> -->
+
+
+
+<div class="Django_postform_fields_div">
+    
+        <p>Product_name</p><input type="text" name="Product_name" maxlength="200" required="" id="id_Product_name"> <br>
+    
+        <p>Product_price</p><input type="number" name="Product_price" required="" id="id_Product_price"> <br>
+    
+        <p>Product_brand</p><input type="text" name="Product_brand" maxlength="100" required="" id="id_Product_brand"> <br>
+    
+        <p>product_description</p><input type="text" name="product_description" maxlength="500" required="" id="id_product_description"> <br>
+    
+        <p>Product_color</p><input type="text" name="Product_color" maxlength="20" required="" id="id_Product_color"> <br>
+    
+        <p>Product_size</p><ul id="id_Product_size">
+    <li><label for="id_Product_size_0"><input type="checkbox" name="Product_size" value="0-3 месяца" id="id_Product_size_0">0-3</label></li>
+    <li><label for="id_Product_size_1"><input type="checkbox" name="Product_size" value="3-6 месяцев" id="id_Product_size_1">3-6</label></li>
+    <li><label for="id_Product_size_2"><input type="checkbox" name="Product_size" value="6-12 месяцев" id="id_Product_size_2">
+ 6-12</label>
+
+</li>
+    <li><label for="id_Product_size_3"><input type="checkbox" name="Product_size" value="12-18 месяцев" id="id_Product_size_3">
+ 12-18</label>
+
+</li>
+    <li><label for="id_Product_size_4"><input type="checkbox" name="Product_size" value="18-24 месяца" id="id_Product_size_4">
+ 18-24</label>
+
+</li>
+    <li><label for="id_Product_size_5"><input type="checkbox" name="Product_size" value="2 года" id="id_Product_size_5">
+ 2-y</label>
+
+</li>
+    <li><label for="id_Product_size_6"><input type="checkbox" name="Product_size" value="3 года" id="id_Product_size_6">
+ 3-y</label>
+
+</li>
+    <li><label for="id_Product_size_7"><input type="checkbox" name="Product_size" value="4 года" id="id_Product_size_7">
+ 4-y</label>
+
+</li>
+    <li><label for="id_Product_size_8"><input type="checkbox" name="Product_size" value="5 лет" id="id_Product_size_8">
+ 5-y</label>
+
+</li>
+    <li><label for="id_Product_size_9"><input type="checkbox" name="Product_size" value="6 лет" id="id_Product_size_9">
+ 6-y</label>
+
+</li>
+    <li><label for="id_Product_size_10"><input type="checkbox" name="Product_size" value="7 лет" id="id_Product_size_10">
+ 7-y</label>
+
+</li>
+    <li><label for="id_Product_size_11"><input type="checkbox" name="Product_size" value="8 лет" id="id_Product_size_11">
+ 8-y</label>
+
+</li>
+    <li><label for="id_Product_size_12"><input type="checkbox" name="Product_size" value="9 лет" id="id_Product_size_12">
+ 9-y</label>
+
+</li>
+    <li><label for="id_Product_size_13"><input type="checkbox" name="Product_size" value="10 лет" id="id_Product_size_13">
+ 10-y</label>
+
+</li>
+    <li><label for="id_Product_size_14"><input type="checkbox" name="Product_size" value="11 лет" id="id_Product_size_14">
+ 11-y</label>
+
+</li>
+    <li><label for="id_Product_size_15"><input type="checkbox" name="Product_size" value="12 лет" id="id_Product_size_15">
+ 12-y</label>
+
+</li>
+    <li><label for="id_Product_size_16"><input type="checkbox" name="Product_size" value="13 лет" id="id_Product_size_16">
+ 13-y</label>
+
+</li>
+    <li><label for="id_Product_size_17"><input type="checkbox" name="Product_size" value="14 лет (XS)" id="id_Product_size_17">
+ 14-y</label>
+
+</li>
+    <li><label for="id_Product_size_18"><input type="checkbox" name="Product_size" value="16 лет (S)" id="id_Product_size_18">
+ 16-y</label>
+
+</li>
+    <li><label for="id_Product_size_19"><input type="checkbox" name="Product_size" value="18 лет (M)" id="id_Product_size_19">
+ 18-y</label>
+
+</li>
+</ul> <br>
+    
+        <p>Product_characteristics</p><input type="text" name="Product_characteristics" maxlength="1000" required="" id="id_Product_characteristics"> <br>
+    
+        <p>for_which_gender</p><select name="for_which_gender" id="id_for_which_gender">
+  <option value="Boys">Для мальчиков</option>
+
+  <option value="Girls">Для девочек</option>
+
+</select> <br>
+    
+        <p>Product_Category</p><select name="Product_Category" id="id_Product_Category">
+  <option value="Shorts">Шортики</option>
+
+  <option value="Dress">Платье</option>
+
+  <option value="Deaper">Пеленки</option>
+
+  <option value="Socks">Носки</option>
+
+  <option value="T-Shirts">Майки</option>
+
+  <option value="shoes">Обувь</option>
+
+</select> <br>
+    
+    </div>
+
+
+
+    <div class="Django_formset_fields_div">
+        {{ formset.management_form }}
+        {% for form in formset %}
+            {{ form }}
+        {% endfor %}
+    </div>
+
+    <input type="submit" name="submit" value="Submit" class="submit_btn" />
+</form>
 
 </div>
 

@@ -1,3 +1,36 @@
+
+
+
+
+
+
+function output_added_picture_for_the_product(input){
+    product_image_input_div = document.getElementById('selected_picture_for_product_div')
+    product_image_input = document.getElementById('selected_picture_for_product')
+    
+
+    html_code_to_display_the_selected_picture = '<img class="img-fluid" name="product_image" id="entering_file_img" alt="Изображение товара" src="' + product_image_input.files[0].name + ' " class="product_image" /> '
+    fuck = '<input type="file" style="display:none;" name="additional_images_for_the_product" accept="image/*" value="'+ product_image_input.value +'"/>'
+    console.log(product_image_input.files[0].name)
+    product_image_input_div.insertAdjacentHTML( "afterbegin", html_code_to_display_the_selected_picture)
+    product_image_input_div.insertAdjacentHTML( "afterbegin", fuck)
+    
+
+    if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+           reader.onload = function (e) {
+                $('#entering_file_img')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(200);
+            };
+
+
+            reader.readAsDataURL(input.files[0]);
+        }
+}
+
 function Like_product_btn(id){
     let Like_btn_by_id = document.getElementById('Like_product_btn_id_' + 'id')
     let Product_id = id

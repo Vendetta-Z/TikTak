@@ -2,8 +2,7 @@
 target/
 *.iml
 .idea/
-
+/.TikTak/static/img/
 
 venv
 
-TikTak/static/img

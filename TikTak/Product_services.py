@@ -1,13 +1,15 @@
 from django.core import paginator
 
-from .models import Product
+from .models import Product, ImageGallery
 from Like.models import Like
-
 
 product = Product.objects.all()
 
 
 def _get_user_liked_products_(request):
+    if request.user.is_anonymous:
+        return '0'
+    product_liked_user = ''
     product_liked_user = Like.objects.filter(user=request.user)
     liked_products = []
     for id_in_product_liked_users in product_liked_user:
@@ -56,3 +58,8 @@ def _get_product_pagination_(request, query):
         page_number = request.GET.get('page')
         page_obj = Paginator.get_page(page_number)
         return page_obj
+
+
+def _get_a_product_list_without_dublicate(property_name_from_the_list: str):
+    """Возвращает список всех товаров , отсортированных по указанному аттрибуту property_name_from_the_list"""
+    return Product.get_a_list_without_dublicate(Product(), property_name_from_the_list)

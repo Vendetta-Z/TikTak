@@ -101,7 +101,13 @@
                         <div class="card-body" style="height: 100%;">
                             <h1 class="h2">{{product.Product_name}}</h1>
 
-                            <h6>{{product.for_which_gender}}</h6>
+
+                            {% if product.for_which_gender == 'Girls'%}
+                                <h6>Для девочек</h6>
+                            {% else %}
+                                <h6>Для Мальчиков</h6>
+                            {% endif %}
+
                             <p class="h3 py-2">Цена: {{product.Product_price}} p.</p>
 
                             <ul class="list-inline">

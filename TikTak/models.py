@@ -13,9 +13,9 @@ class Product(models.Model):
     id = models.AutoField(primary_key=True)
     Product_name = models.CharField(max_length=200)
     product_description = models.CharField(max_length=500)
-    Product_price = models.IntegerField()
+    Product_price = models.IntegerField(null=False)
     Product_color = models.CharField(max_length=20)
-    Product_brand = models.CharField(max_length=100, default=None)
+    Product_brand = models.CharField(max_length=100, default=None, null=False)
     Product_characteristics = models.CharField(max_length=1000)
     Added_time = models.DateTimeField(auto_now=True)
     likes = GenericRelation(Like)
@@ -48,16 +48,17 @@ class Product(models.Model):
     Product_size = MultiSelectField(choices=Choises)
 
     P_Categorys = [
-        ('Шортики', 'Shorts'),
-        ('Платье', 'Dress'),
-        ('Пеленки', 'Deaper'),
-        ('Носки', 'Socks'),
-        ('Майки', 'T-Shirts'),
-        ('Обувь', 'shoes'),
+        ('Shorts', 'Шортики'),
+        ('Dress', 'Платье'),
+        ('Deaper', 'Пеленки'),
+        ('Socks', 'Носки'),
+        ('T-Shirts', 'Майки'),
+        ('shoes', 'Обувь'),
     ]
 
+
     Product_Category = models.CharField(
-        max_length=7,
+        max_length=8,
         choices=P_Categorys,
         default='None',
     )
@@ -65,8 +66,8 @@ class Product(models.Model):
     for_which_gender = models.CharField(
         max_length=15,
         choices=[
-            ('Для мальчиков', 'Boys'),
-            ('Для девочек', 'Girls'),
+            ('Boys', 'Для мальчиков'),
+            ('Girls', 'Для девочек'),
         ],
         default=None,
     )
@@ -95,5 +96,7 @@ class Product(models.Model):
 
 class ImageGallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='TikTak/static/img')
+    image = models.ImageField(upload_to='TikTak/static/img', max_length=450)
+
+
 
