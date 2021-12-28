@@ -112,3 +112,57 @@ function Like_product_btn_remove(id){
         }
     })
    }
+
+
+
+
+
+function DeleteProduct(id){
+    console.log('fuck')
+
+   $.ajax({
+        method:'GET',
+        dataType:'json',
+        data: {'Product_id':id},
+        url: "/DeleteProduct/",
+        success:function(data){
+                $('#block_with_list_of_added_products').html('  ')
+                let Product_list = JSON.parse(data['ProductList'])
+                let Product_img = JSON.parse(data['ProductImages'])
+                console.log(Product_list)
+                console.log(Product_img)
+
+                for(var i in Product_list){
+
+                    $('#block_with_list_of_added_products').append(''+
+                        '<div class="col-md-3 recently_product">'+
+                            '<div class="card mb-4 product-wap  rounded-0">'+
+                                '<div class="card rounded-1">'+
+                                    '<img class="card-img Product-image_sizing rounded-0 img-fluid" src="'+ Product_img[Product_list[i]['pk']] +'">'+
+                                '<div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">'+
+                                    '<ul class="list-unstyled">'+
+                                         '<li><p class="btn btn-success text-white"'+
+                                               'onclick="Like_product_btn_remove('+ Product_list[i]['id']  +')"'+
+                                               'id="Like_product_btn_id_' + Product_list[i]['id'] +'"'+
+                                               'onload="is_like()"'+
+                                               'Product_id=' + Product_list[i]['id'] +'>&#128147</p></li>'+
+
+                                        '<li><a class="btn btn-success text-white mt-2" href="'+  Product_list[i]['id']  +'/"><i class="far fa-eye"></i></a></li>'+
+                                        '<li><a class="btn btn-success text-white mt-2" href="'+  Product_list[i]['id']  +'/"><i class="fas fa-cart-plus"></i></a></li>'+
+                                    '</ul>'+
+                                '</div>'+
+                                '<div class="card-body">'+
+                                    '<a href="' +Product_list[i]['id']+ '/" class="h3 text-decoration-none">'   + Product_list[i]["fields"]["Product_name"]+  '</a><br>'+
+                                    '<ul class="w-100 list-unstyled d-flex justify-content-between mb-0">'+
+                                        '<li>M/L/X/XL</li>'+
+                                    '</ul>'+
+                                    '<p class="text-center mb-0 price">'  +Product_list[i]["fields"]["Product_price"]+  'p.</p>'+
+                                '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>')
+
+            }
+        }
+    })
+   }

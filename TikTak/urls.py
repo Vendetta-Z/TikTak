@@ -12,6 +12,7 @@ urlpatterns = [
     path('Shop/', ProductView.shop_view, name='Shop'),
     path('Profile/', ProductView.profile, name='Profile'),
     path('add_new_product/', ProductView.add_new_product, name='A_N_P'),
+    path('DeleteProduct/', ProductView.DeleteProduct, name='DeleteProduct'),
 
     path('login/', RegAndLoginView.login_view, name='login'),
     path('register/', RegAndLoginView.register_view, name='register'),

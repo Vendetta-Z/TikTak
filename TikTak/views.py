@@ -1,20 +1,16 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-from django.forms import formset_factory
-from django.forms import modelformset_factory
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.http import HttpResponseRedirect
 
 from Like.models import Like
 from Shop_cart.models import Cart
 
-from .forms import AddNewProductForm, ImageNewProduct
 from .models import Product, ImageGallery
 from .RegAndLogin_services import _registration_user_, _login_user_
 from .Product_services import _get_a_product_list_without_dublicate, _get_user_liked_products_, _get_filtered_products_, \
-    _get_product_pagination_
+    _get_product_pagination_, _delete_product_,_add_new_product_
 
 product = Product.objects.all()
 
@@ -79,42 +75,13 @@ class ProductView:
     @login_required
     def add_new_product(self):
         """Загружает страницу добавления товара"""
-        ImageFormSet = modelformset_factory(ImageGallery,
-                                            form=ImageNewProduct, fields=('image',), extra=4)
+        return _add_new_product_(self)
 
-        if self.POST:
-            print('прошла проверку пост запроса ')
-            ProductForm = AddNewProductForm(self.POST)
-            formset = ImageFormSet(self.POST, self.FILES, queryset=ImageGallery.objects.none())
-            print(formset)
-            if ProductForm.is_valid() and formset.is_valid():
-                print('прошла проверку валидности ')
-                Product_Form = ProductForm.save(commit=False)
-                Product_Form.save()
 
-                for form in formset.cleaned_data:
-                    print('Проходит цикл клин дата ')
-
-                    # this helps to not crash if the user
-                    # do not upload all the photos
-                    if form:
-                        image = form['image']
-                        photo = ImageGallery(product=Product_Form, image=image)
-                        photo.save()
-                    # use django messages framework
-                messages.success(self, "Yeeew, check it out on the home page!")
-                return HttpResponseRedirect("/")
-            else:
-                print('запрос не прошел проверку валидности')
-                print(ProductForm.errors, ImageFormSet.errors)
-        else:
-            ProductForm = AddNewProductForm()
-            formset = ImageFormSet(queryset=ImageGallery.objects.none())
-
-        print('fuck')
-        return render(self, 'TikTak/add_new_product.html',
-                      {'postForm': ProductForm, 'formset': ImageFormSet(queryset=ImageGallery.objects.none())})
-
+    @csrf_exempt
+    def DeleteProduct(self):
+        id = self.GET.get('Product_id')
+        return _delete_product_(user=self.user, Id=id)
 
 '''##################################### SignIn|SignUp section start ##################################'''
 

@@ -9,6 +9,7 @@ import json
 from .models import Like
 from TikTak.models import Product
 
+
 class DynamicProductView(View):
     @csrf_exempt
     def add_like(self, *args, **kwargs):

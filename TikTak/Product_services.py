@@ -1,7 +1,20 @@
 from django.core import paginator
+from django.core import serializers
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
+from django.forms import modelformset_factory
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 
+
+import json
+
+from .forms import AddNewProductForm, ImageNewProduct
 from .models import Product, ImageGallery
 from Like.models import Like
+
 
 product = Product.objects.all()
 
@@ -63,3 +76,57 @@ def _get_product_pagination_(request, query):
 def _get_a_product_list_without_dublicate(property_name_from_the_list: str):
     """Возвращает список всех товаров , отсортированных по указанному аттрибуту property_name_from_the_list"""
     return Product.get_a_list_without_dublicate(Product(), property_name_from_the_list)
+
+
+def obj_dict(obj):
+    return obj.__dict__
+
+
+def _add_new_product_(self):
+    ImageFormSet = modelformset_factory(ImageGallery,
+                                        form=ImageNewProduct, fields=('image',), extra=4)
+    ProductList = Product.objects.all()
+    if self.POST:
+        ProductForm = AddNewProductForm(self.POST)
+        formset = ImageFormSet(self.POST, self.FILES, queryset=ImageGallery.objects.none())
+        if ProductForm.is_valid() and formset.is_valid():
+            Product_Form = ProductForm.save(commit=False)
+            Product_Form.save()
+
+            for form in formset.cleaned_data:
+
+                # this helps to not crash if the user
+                # do not upload all the photos
+                if form:
+                    image = form['image']
+                    photo = ImageGallery(product=Product_Form, image=image)
+                    photo.save()
+                # use django messages framework
+            messages.success(self, "Yeeew, check it out on the home page!")
+            return HttpResponseRedirect("/add_new_product/")
+        else:
+            print(ProductForm.errors, ImageFormSet.errors)
+    else:
+        ProductForm = AddNewProductForm()
+        formset = ImageFormSet(queryset=ImageGallery.objects.none())
+
+    return render(self, 'TikTak/add_new_product.html',
+                  {'postForm': ProductForm,
+                   'ProductList': ProductList,
+                   'formset': ImageFormSet(queryset=ImageGallery.objects.none())})
+
+@csrf_exempt
+def _delete_product_(user, Id):
+    Product.objects.get(id=Id).delete()
+
+    all_product_image_list = {}
+    for Product_img in Product.objects.all():
+        all_product_image_list.update(
+            {Product_img.id: Product.objects.get(id=Product_img.id).get_first_image()})
+
+    data = {
+        'ProductList': serializers.serialize('json', Product.objects.all()),
+        'ProductImages': json.dumps(all_product_image_list, default=obj_dict),
+    }
+    print(data)
+    return JsonResponse(data, safe=False)

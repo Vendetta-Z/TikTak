@@ -123,6 +123,23 @@
         cursor: pointer;
         color:black !important;
     }
+
+
+    .block_with_list_of_added_products{
+        width: 85%;
+        margin:5px auto;
+        background-color:#59AB6E;
+        padding: 1%;
+        border: 4px solid #212529;
+        border-radius: 5px;
+    }
+    .recently_product{
+        display: inline-block;
+        margin: 0.5% auto;
+        width: 18%;
+        align-items: center;
+    }
+
 </style>
 
 <div>
@@ -153,108 +170,46 @@
         <p>product_description</p><input type="text" name="product_description" maxlength="500" required="" id="id_product_description"> <br>
     
         <p>Product_color</p><input type="text" name="Product_color" maxlength="20" required="" id="id_Product_color"> <br>
-    
-        <p>Product_size</p><ul id="id_Product_size">
-    <li><label for="id_Product_size_0"><input type="checkbox" name="Product_size" value="0-3 месяца" id="id_Product_size_0">0-3</label></li>
-    <li><label for="id_Product_size_1"><input type="checkbox" name="Product_size" value="3-6 месяцев" id="id_Product_size_1">3-6</label></li>
-    <li><label for="id_Product_size_2"><input type="checkbox" name="Product_size" value="6-12 месяцев" id="id_Product_size_2">
- 6-12</label>
 
-</li>
-    <li><label for="id_Product_size_3"><input type="checkbox" name="Product_size" value="12-18 месяцев" id="id_Product_size_3">
- 12-18</label>
 
-</li>
-    <li><label for="id_Product_size_4"><input type="checkbox" name="Product_size" value="18-24 месяца" id="id_Product_size_4">
- 18-24</label>
-
-</li>
-    <li><label for="id_Product_size_5"><input type="checkbox" name="Product_size" value="2 года" id="id_Product_size_5">
- 2-y</label>
-
-</li>
-    <li><label for="id_Product_size_6"><input type="checkbox" name="Product_size" value="3 года" id="id_Product_size_6">
- 3-y</label>
-
-</li>
-    <li><label for="id_Product_size_7"><input type="checkbox" name="Product_size" value="4 года" id="id_Product_size_7">
- 4-y</label>
-
-</li>
-    <li><label for="id_Product_size_8"><input type="checkbox" name="Product_size" value="5 лет" id="id_Product_size_8">
- 5-y</label>
-
-</li>
-    <li><label for="id_Product_size_9"><input type="checkbox" name="Product_size" value="6 лет" id="id_Product_size_9">
- 6-y</label>
-
-</li>
-    <li><label for="id_Product_size_10"><input type="checkbox" name="Product_size" value="7 лет" id="id_Product_size_10">
- 7-y</label>
-
-</li>
-    <li><label for="id_Product_size_11"><input type="checkbox" name="Product_size" value="8 лет" id="id_Product_size_11">
- 8-y</label>
-
-</li>
-    <li><label for="id_Product_size_12"><input type="checkbox" name="Product_size" value="9 лет" id="id_Product_size_12">
- 9-y</label>
-
-</li>
-    <li><label for="id_Product_size_13"><input type="checkbox" name="Product_size" value="10 лет" id="id_Product_size_13">
- 10-y</label>
-
-</li>
-    <li><label for="id_Product_size_14"><input type="checkbox" name="Product_size" value="11 лет" id="id_Product_size_14">
- 11-y</label>
-
-</li>
-    <li><label for="id_Product_size_15"><input type="checkbox" name="Product_size" value="12 лет" id="id_Product_size_15">
- 12-y</label>
-
-</li>
-    <li><label for="id_Product_size_16"><input type="checkbox" name="Product_size" value="13 лет" id="id_Product_size_16">
- 13-y</label>
-
-</li>
-    <li><label for="id_Product_size_17"><input type="checkbox" name="Product_size" value="14 лет (XS)" id="id_Product_size_17">
- 14-y</label>
-
-</li>
-    <li><label for="id_Product_size_18"><input type="checkbox" name="Product_size" value="16 лет (S)" id="id_Product_size_18">
- 16-y</label>
-
-</li>
-    <li><label for="id_Product_size_19"><input type="checkbox" name="Product_size" value="18 лет (M)" id="id_Product_size_19">
- 18-y</label>
-
-</li>
-</ul> <br>
-    
         <p>Product_characteristics</p><input type="text" name="Product_characteristics" maxlength="1000" required="" id="id_Product_characteristics"> <br>
     
         <p>for_which_gender</p><select name="for_which_gender" id="id_for_which_gender">
-  <option value="Boys">Для мальчиков</option>
-
-  <option value="Girls">Для девочек</option>
-
-</select> <br>
+              <option value="Boys">Для мальчиков</option>
+              <option value="Girls">Для девочек</option>
+        </select> <br>
     
         <p>Product_Category</p><select name="Product_Category" id="id_Product_Category">
-  <option value="Shorts">Шортики</option>
-
-  <option value="Dress">Платье</option>
-
-  <option value="Deaper">Пеленки</option>
-
-  <option value="Socks">Носки</option>
-
-  <option value="T-Shirts">Майки</option>
-
-  <option value="shoes">Обувь</option>
-
-</select> <br>
+              <option value="Shorts">Шортики</option>
+              <option value="Dress">Платье</option>
+              <option value="Deaper">Пеленки</option>
+              <option value="Socks">Носки</option>
+              <option value="T-Shirts">Майки</option>
+              <option value="shoes">Обувь</option>
+        </select> <br>
     
+        <p>Product_size</p><ul id="id_Product_size">
+            <li><label for="id_Product_size_0"><input type="checkbox" name="Product_size" value="0-3 месяца" id="id_Product_size_0">0-3</label></li>
+            <li><label for="id_Product_size_1"><input type="checkbox" name="Product_size" value="3-6 месяцев" id="id_Product_size_1">3-6</label></li>
+            <li><label for="id_Product_size_2"><input type="checkbox" name="Product_size" value="6-12 месяцев" id="id_Product_size_2">6-12</label></li>
+            <li><label for="id_Product_size_3"><input type="checkbox" name="Product_size" value="12-18 месяцев" id="id_Product_size_3">12-18</label></li>
+            <li><label for="id_Product_size_4"><input type="checkbox" name="Product_size" value="18-24 месяца" id="id_Product_size_4">18-24</label></li>
+            <li><label for="id_Product_size_5"><input type="checkbox" name="Product_size" value="2 года" id="id_Product_size_5">2-y</label></li>
+            <li><label for="id_Product_size_6"><input type="checkbox" name="Product_size" value="3 года" id="id_Product_size_6">3-y</label></li>
+            <li><label for="id_Product_size_7"><input type="checkbox" name="Product_size" value="4 года" id="id_Product_size_7">4-y</label></li>
+            <li><label for="id_Product_size_8"><input type="checkbox" name="Product_size" value="5 лет" id="id_Product_size_8">5-y</label></li>
+            <li><label for="id_Product_size_9"><input type="checkbox" name="Product_size" value="6 лет" id="id_Product_size_9">6-y</label></li>
+            <li><label for="id_Product_size_10"><input type="checkbox" name="Product_size" value="7 лет" id="id_Product_size_10">7-y</label></li>
+            <li><label for="id_Product_size_11"><input type="checkbox" name="Product_size" value="8 лет" id="id_Product_size_11">8-y</label></li>
+            <li><label for="id_Product_size_12"><input type="checkbox" name="Product_size" value="9 лет" id="id_Product_size_12">9-y</label></li>
+            <li><label for="id_Product_size_13"><input type="checkbox" name="Product_size" value="10 лет" id="id_Product_size_13">10-y</label></li>
+            <li><label for="id_Product_size_14"><input type="checkbox" name="Product_size" value="11 лет" id="id_Product_size_14">11-y</label></li>
+            <li><label for="id_Product_size_15"><input type="checkbox" name="Product_size" value="12 лет" id="id_Product_size_15">12-y</label></li>
+            <li><label for="id_Product_size_16"><input type="checkbox" name="Product_size" value="13 лет" id="id_Product_size_16">13-y</label></li>
+            <li><label for="id_Product_size_17"><input type="checkbox" name="Product_size" value="14 лет (XS)" id="id_Product_size_17">14-y</label></li>
+            <li><label for="id_Product_size_18"><input type="checkbox" name="Product_size" value="16 лет (S)" id="id_Product_size_18">16-y</label></li>
+            <li><label for="id_Product_size_19"><input type="checkbox" name="Product_size" value="18 лет (M)" id="id_Product_size_19">18-y</label></li>
+</ul> <br>
     </div>
 
 
@@ -266,11 +221,41 @@
         {% endfor %}
     </div>
 
-    <input type="submit" name="submit" value="Submit" class="submit_btn" />
+    <input type="submit" name="submit" value="Добавить товар" class="submit_btn" />
 </form>
+
+<div class="block_with_list_of_added_products" id='block_with_list_of_added_products'>
+    {% for product in ProductList %}
+        <div class="col-md-3 recently_product">
+                    <div class="card mb-4 product-wap  rounded-0">
+                        <div class="card rounded-1">
+                            <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{product.get_first_image}}">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        <li><a class="btn btn-success text-white mt-2" href="{{product.id}}/"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" onclick="DeleteProduct({{product.id}})" ><i class="fas fa-trash"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{Product.id}}/" class="h3 text-decoration-none">{{product.Product_name}}</a><br>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                    <li>M/L/X/XL</li>
+                                    <li><a class="fas fa-heart" style="color:red; cursor: pointer;text-decoration: none;"></a><a id="Product_{{product.id}}_likes">{{product.total_likes}}</a></li>
+                                </ul>
+                                <p class="text-center mb-0 price">{{product.Product_price}} p.</p>
+                            </div>
+                        </div>
+                    </div>
+    {% endfor %}
+</div>
 
 </div>
 
 {% include './footer.html'%}
 </body>
+    <script src="{% static 'TikTak/js/script.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{% static 'TikTak/js/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/jquery-migrate-1.2.1.min.js' %}"></script>
 </html>
