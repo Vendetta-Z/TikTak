@@ -118,7 +118,6 @@ function Like_product_btn_remove(id){
 
 
 function DeleteProduct(id){
-    console.log('fuck')
 
    $.ajax({
         method:'GET',
@@ -166,3 +165,31 @@ function DeleteProduct(id){
         }
     })
    }
+
+
+function AddOrChangeProductImage(product_id,Image,O_P_P){
+        var ImageChangeInput = document.getElementById('ImageChangeInput')
+        var NewImageInput = document.getElementById('NewImageInput')
+        var formdata = new FormData();
+
+
+        file = ImageChangeInput.files[0];
+        NewImageFile = NewImageInput.files[0]
+
+        console.log(Image)
+
+        formdata.append('upload_image', file);
+        formdata.append('Product_id', product_id);
+        formdata.append('Old_product_picture', Image);
+        formdata.append('NewAddingImage', NewImageFile)
+        $.ajax({
+            url: "/ChangeProductImage/",
+            type: 'POST',
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: console.log('success!')
+        });
+
+}
+    

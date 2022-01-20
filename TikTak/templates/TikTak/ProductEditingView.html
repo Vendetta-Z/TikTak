@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Editing</title>
+    {% load static %}
+
+    <link rel="apple-touch-icon" href="{% static 'TikTak/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'TikTak/img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'TikTak/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/templatemo.min.css' %}">
+    <link rel="stylesheet" href="{% static 'TikTak/css/custom.css' %}">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'TikTak/css/fontawesome.min.css' %}">
+
+    <script src="{% static 'TikTak/js/script.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{% static 'TikTak/js/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'TikTak/js/jquery-migrate-1.2.1.min.js' %}"></script>
+
+</head>
+{% include './Header.html'%}
+<body>
+
+     <section class="bg-light">
+     	<form action="/EditingProduct/{{product.id}}" method='POST'>
+        {%csrf_token%}
+	        <div class="container pb-5">
+	            <div class="row">
+	                <div class="col-lg-5 mt-5">
+	                    <div class="card mb-3">
+	                        <img class="main-card-img img-fluid" src="{{product.get_first_image}}" alt="Card image cap" id="product-detail">
+	                    </div>
+	                    <div class="row">
+	                        <!--Start Controls-->
+	                        <div class="col-1 align-self-center">
+	                            <a href="#multi-item-example" role="button" data-bs-slide="prev">
+	                                <i class="text-dark fas fa-chevron-left"></i>
+	                                <span class="sr-only">Previous</span>
+	                            </a>
+	                        </div>
+	                        <!--End Controls-->
+	                        <!--Start Carousel Wrapper-->
+	                        <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
+	                            <!--Start Slides-->
+	                            <div class="carousel-inner product-links-wap" role="listbox">
+
+	                                <!--First slide-->
+	                                <div class="carousel-item active">
+	                                    <div class="row ">
+	                                        {% for image in product.images.all %}
+	                                        <div class="col-4 old_product_images_div">
+	                                                <input type="file" style="display:none;" name="newimage" id="ImageChangeInput" onchange="AddOrChangeProductImage(data='{{product.id}}',dataImage= '{{image.image}}')"/>
+	                                                <label for="ImageChangeInput"><img class="img-fluid" style="margin-top: 10px;" src="{{image.image.url}}" alt="Product Image 2"></label>
+
+	                                        </div>
+	                                        {% endfor %}
+
+
+
+	                                        <div class="plus_div align-self-center">
+											<label for="NewImageInput" class="plus">
+	                                                <input type="file" style="display:none;" name="NewAddingImage" id="NewImageInput" onchange="AddOrChangeProductImage(product_id='{{product.id}}',Image= '{{image.image}}')"/>
+											</label>
+
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <!--/.First slide-->
+	                            </div>
+	                            <!--End Slides-->
+	                        </div>
+	                        <!--End Carousel Wrapper-->
+	                        <!--Start Controls-->
+	                        <div class="col-1 align-self-center">
+	                            <a href="#multi-item-example" role="button" data-bs-slide="next">
+	                                <i class="text-dark fas fa-chevron-right"></i>
+	                                <span class="sr-only">Next</span>
+	                            </a>
+	                        </div>
+	                        <!--End Controls-->
+	                    </div>
+	                </div>
+	                <!-- col end -->
+	                <div class="col-lg-7 mt-5">
+	                    <div class="card">
+	                        <div class="card-body" style="height: 100%;">
+	                        		<h1><input name='changed_product_name' type="text" placeholder="{{product.Product_name}}"></h1>
+		                            <!-- <h1 class="h2">{{product.Product_name}}</h1> -->
+ 									
+		                            <select name="changed_for_which_gender">
+		                            		<option value="Boys" >Для мальчиков</option>
+		                            		<option value="Girls" >Для девочек</option>
+		                            </select>
+
+		                            <!--{% if product.for_which_gender == 'Girls'%}
+		                                <h6>Для девочек</h6>
+		                            {% else %}
+		                                <h6>Для Мальчиков</h6>
+		                            {% endif %} -->
+
+		                            <p class="h3 py-2">Цена: <input type="number" name="Product_price" placeholder="{{product.Product_price}}"> p.</p>
+
+		                            <ul class="list-inline">
+		                                <li class="list-inline-item">
+		                                    <h6>Производитель:</h6>
+		                                </li>
+		                                <li class="list-inline-item">
+		                                    <p class="text-muted"><strong><input type="text" name="Product_brand" placeholder="{{product.Product_brand}}"></strong></p>
+		                                </li>
+		                            </ul>
+
+		                            <h6>Описание:</h6>
+		                            <p>{{product.product_description}}</p>
+		                            <ul class="list-inline">
+		                                <li class="list-inline-item">
+		                                    <h6>Цвета :</h6>
+		                                </li>
+		                                <li class="list-inline-item">
+		                                    <p class="text-muted"><strong><input type="text" name="Product_color" placeholder="{{product.Product_color}}"></strong></p>
+		                                </li>
+		                            </ul>
+
+		                            <h6>Характеристики:</h6><input type="text" name="Product_characteristics" placeholder="{{product.Product_characteristics}}">
+
+		                                <input type="hidden" name="product-title" value="Activewear">
+		                                <div class="row">
+		                                    <!-- <div class=>
+		                                    <style type="text/css">
+		                                    	.Product_size_list{
+											        width: 29%;
+											        border:2px solid black;
+											        display: block;
+											        list-style: none;
+											        padding: 5px ;
+											        margin: 5px;
+											    }
+											    .Product_size_list{
+											        width: 29%;
+											        margin: 5px;
+											        display: inline-block;
+											    }
+											    .Product_size_list input{
+											        width: 25%;
+											        height: 20px;
+											        border:2px solid black;
+											        display: inline-block;
+											    }
+		                                    </style>
+
+											<p>Размеры товара</p><ul class="Product_size_list" id="id_Product_size">
+            								<li><label for="id_Product_size_0"><input type="checkbox" name="Product_size" value="0-3 месяца" id="id_Product_size_0">0-3</label></li>
+								            <li><label for="id_Product_size_1"><input type="checkbox" name="Product_size" value="3-6 месяцев" id="id_Product_size_1">3-6</label></li>
+								            <li><label for="id_Product_size_2"><input type="checkbox" name="Product_size" value="6-12 месяцев" id="id_Product_size_2">6-12</label></li>
+								            <li><label for="id_Product_size_3"><input type="checkbox" name="Product_size" value="12-18 месяцев" id="id_Product_size_3">12-18</label></li>
+								            <li><label for="id_Product_size_4"><input type="checkbox" name="Product_size" value="18-24 месяца" id="id_Product_size_4">18-24</label></li>
+								            <li><label for="id_Product_size_5"><input type="checkbox" name="Product_size" value="2 года" id="id_Product_size_5">2-y</label></li>
+								            <li><label for="id_Product_size_6"><input type="checkbox" name="Product_size" value="3 года" id="id_Product_size_6">3-y</label></li>
+								            <li><label for="id_Product_size_7"><input type="checkbox" name="Product_size" value="4 года" id="id_Product_size_7">4-y</label></li>
+								            <li><label for="id_Product_size_8"><input type="checkbox" name="Product_size" value="5 лет" id="id_Product_size_8">5-y</label></li>
+								            <li><label for="id_Product_size_9"><input type="checkbox" name="Product_size" value="6 лет" id="id_Product_size_9">6-y</label></li>
+								            <li><label for="id_Product_size_10"><input type="checkbox" name="Product_size" value="7 лет" id="id_Product_size_10">7-y</label></li>
+								            <li><label for="id_Product_size_11"><input type="checkbox" name="Product_size" value="8 лет" id="id_Product_size_11">8-y</label></li>
+								            <li><label for="id_Product_size_12"><input type="checkbox" name="Product_size" value="9 лет" id="id_Product_size_12">9-y</label></li>
+								            <li><label for="id_Product_size_13"><input type="checkbox" name="Product_size" value="10 лет" id="id_Product_size_13">10-y</label></li>
+								            <li><label for="id_Product_size_14"><input type="checkbox" name="Product_size" value="11 лет" id="id_Product_size_14">11-y</label></li>
+								            <li><label for="id_Product_size_15"><input type="checkbox" name="Product_size" value="12 лет" id="id_Product_size_15">12-y</label></li>
+								            <li><label for="id_Product_size_16"><input type="checkbox" name="Product_size" value="13 лет" id="id_Product_size_16">13-y</label></li>
+								            <li><label for="id_Product_size_17"><input type="checkbox" name="Product_size" value="14 лет (XS)" id="id_Product_size_17">14-y</label></li>
+								            <li><label for="id_Product_size_18"><input type="checkbox" name="Product_size" value="16 лет (S)" id="id_Product_size_18">16-y</label></li>
+            								<li><label for="id_Product_size_19"><input type="checkbox" name="Product_size" value="18 лет (M)" id="id_Product_size_19">18-y</label></li>
+												</ul>-->
+		                                    </div>
+		                                </div>
+		                                <div class="row pb-3">
+		                                    <div class="col d-grid">
+		                                        <button  class="btn btn-success text-white mt-2" type="submit"  name="">Подтвердить изменения</button>
+
+		                                        <!--<button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>-->
+		                                    </div>
+		                                </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </form>
+    </section>
+</body>
+</html>

@@ -3,6 +3,8 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
 
 from Like.models import Like
 from Shop_cart.models import Cart
@@ -77,12 +79,58 @@ class ProductView:
         """Загружает страницу добавления товара"""
         return _add_new_product_(self)
 
-
     @csrf_exempt
     def DeleteProduct(self):
         id = self.GET.get('Product_id')
         return _delete_product_(user=self.user, Id=id)
 
+    @csrf_exempt
+    def EditingProduct(self, Product_id):
+        ProductById = Product.objects.get(id=Product_id)
+        if self.POST:
+            ProductById.Product_name = self.POST.get('changed_product_name')
+            ProductById.Product_price = self.POST.get('Product_price')
+            ProductById.Product_color = self.POST.get('Product_color')
+            ProductById.Product_brand = self.POST.get('Product_brand')
+            ProductById.Product_characteristics = self.POST.get('Product_characteristics')
+            Product.for_which_gender = self.POST.get('changed_for_which_gender')
+            return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById})
+        return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById})
+
+    @csrf_exempt
+    def AddOrChangeProductImage(self):
+        new_image = self.FILES.get('upload_image')
+        ProductId = self.POST.get('Product_id')
+        ProductImageUrl = self.POST.get('Old_product_picture')
+        new_adding_image = self.FILES.get('NewAddingImage')
+        prod = Product(id=ProductId)
+
+        productGalleryObject = ImageGallery.objects.filter(product=prod)
+        if new_adding_image:
+            productGalleryObject = ImageGallery()
+            productGalleryObject.image = new_adding_image
+            productGalleryObject.product = prod
+            productGalleryObject.save()
+
+        for i in productGalleryObject:
+            if i.image == str(ProductImageUrl):
+                print('=====================')
+                print('сущ. фотка:')
+                print(i.image)
+                print('---------------------')
+                print(new_image)
+                print('---------------------')
+                print('Старая фотка:')
+                print(ProductImageUrl)
+                print('=====================')
+
+                example = ImageGallery.objects.get(product=prod, image=ProductImageUrl)
+                example.image = new_image
+                example.save()
+
+                break
+
+        return JsonResponse({"fuck": "yes mother fuck'er"})
 '''##################################### SignIn|SignUp section start ##################################'''
 
 

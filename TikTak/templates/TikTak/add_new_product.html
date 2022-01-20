@@ -232,7 +232,7 @@
                             <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{product.get_first_image}}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white mt-2" href="{{product.id}}/"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{% url 'Product_edit' product.id%} "><i class="far fa-eye"></i></a></li>
                                         <li><a class="btn btn-success text-white mt-2" onclick="DeleteProduct({{product.id}})" ><i class="fas fa-trash"></i></a></li>
                                     </ul>
                                 </div>

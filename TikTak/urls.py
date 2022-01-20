@@ -13,6 +13,8 @@ urlpatterns = [
     path('Profile/', ProductView.profile, name='Profile'),
     path('add_new_product/', ProductView.add_new_product, name='A_N_P'),
     path('DeleteProduct/', ProductView.DeleteProduct, name='DeleteProduct'),
+    path('EditingProduct/<int:Product_id>', ProductView.EditingProduct, name='Product_edit'),
+    path('ChangeProductImage/', ProductView.AddOrChangeProductImage , name='ChangeProductImage'),
 
     path('login/', RegAndLoginView.login_view, name='login'),
     path('register/', RegAndLoginView.register_view, name='register'),

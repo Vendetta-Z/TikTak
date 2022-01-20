@@ -20,3 +20,51 @@
     transition:0.3s;
 
 }
+
+
+.old_product_images_div img{
+    filter: brightness(100%);
+}
+.old_product_images_div img:hover{
+    filter: brightness(50%);
+    transition: 0.4s;
+}
+
+.old_product_images_div label:hover{
+    cursor: pointer;
+    transition: 0.5s;
+    opacity: 100%;
+}
+
+
+.plus_div{
+    flex: 0 0 auto;
+    width: 27%;
+    text-align: center;
+}
+
+.plus {
+
+    margin:5px auto;
+    --b:4px; /* the thickness */
+    width:50%; /* the size */
+    aspect-ratio:1/1;
+    border-radius: 10px;
+    border:10px solid #56ae6c; /* the outer space */
+    background:
+    conic-gradient(from 90deg at var(--b) var(--b),#56ae6c 90deg,#fff 0) 
+    calc(100% + var(--b)/2) calc(100% + var(--b)/2)/
+    calc(50%  + var(--b))   calc(50%  + var(--b));
+    display:inline-block;
+}
+
+.plus:hover{
+    cursor: pointer;
+    width: 80%;
+    background:
+    conic-gradient(from 90deg at var(--b) var(--b),#212934 90deg,#fff 0) 
+    calc(100% + var(--b)/2) calc(100% + var(--b)/2)/
+    calc(50%  + var(--b))   calc(50%  + var(--b));
+    border:10px solid #212934;
+    transition: 0.3s;
+}
