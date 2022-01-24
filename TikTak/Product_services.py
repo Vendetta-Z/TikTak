@@ -130,3 +130,23 @@ def _delete_product_(user, Id):
     }
     print(data)
     return JsonResponse(data, safe=False)
+
+
+@csrf_exempt
+def _change_product_image_(self):
+
+    imageId = self.POST.get('Imageid')
+    productID = self.POST.get('ProductId')
+    NewImage = self.FILES.get('NewImage')
+
+    productById = Product.objects.get(id=productID)
+    Image = ImageGallery.objects.get(product=productById, id=imageId)
+    OldAddedTime = Image.added_at
+    Image.image = NewImage
+    Image.added_at = OldAddedTime
+    Image.save()
+    data = {
+        'ProductImages': serializers.serialize('json', ImageGallery.objects.filter(product=productID).order_by('-added_at')),
+    }
+    return JsonResponse(data)
+

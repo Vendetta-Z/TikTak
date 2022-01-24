@@ -167,29 +167,66 @@ function DeleteProduct(id){
    }
 
 
-function AddOrChangeProductImage(product_id,Image,O_P_P){
-        var ImageChangeInput = document.getElementById('ImageChangeInput')
-        var NewImageInput = document.getElementById('NewImageInput')
-        var formdata = new FormData();
-
-
-        file = ImageChangeInput.files[0];
-        NewImageFile = NewImageInput.files[0]
-
-        console.log(Image)
-
-        formdata.append('upload_image', file);
-        formdata.append('Product_id', product_id);
-        formdata.append('Old_product_picture', Image);
-        formdata.append('NewAddingImage', NewImageFile)
-        $.ajax({
-            url: "/ChangeProductImage/",
-            type: 'POST',
-            data: formdata,
-            processData: false,
-            contentType: false,
-            success: console.log('success!')
-        });
-
+function AddNewProductImage(product_id,OldImageId){
+    /* функция добавления новой фотки для товара*/
 }
     
+
+function ChangeProductImage(Product, Imageid){
+    var inputbyid = document.getElementById(Imageid+Product);
+    var formdata = new FormData();
+
+
+    console.log(Imageid + Product)
+    console.log(inputbyid)
+    console.log('fuck')
+    formdata.append('NewImage',inputbyid.files[0]);
+    formdata.append('Imageid',Imageid);
+    formdata.append('ProductId',Product);
+    $.ajax({
+        url: "/ChangeProductImage/",
+        type: 'POST',
+        data: formdata,
+        processData: false,
+        contentType: false,
+
+
+
+        // <input type="file" style="display:none;" id="486524" onchange="ChangeProductImage('524', '486')" name="newimage">
+        // <input type="file" style="display:none;" id="486524" onchange="ChangeProductImage('524', '486')" name="newimage">
+        success:function(data){
+                    let ProductImage_list = JSON.parse(data['ProductImages'])
+                    console.log(ProductImage_list)
+                    $('#ProductImagesBlock').html(' ');
+                    for (var image in ProductImage_list){
+                        $('#ProductImagesBlock').append(''+
+                            '<div class="col-4 old_product_images_div">'+
+                                '<a>' + ProductImage_list[image]['pk']+ '</a>'+
+                                '<input type="file" style="display:none;" id="' + ProductImage_list[image]['pk'] + ProductImage_list[image]['fields']['product'] +
+                                '" onchange="ChangeProductImage('+ "'"+ProductImage_list[image]['fields']['product'] +"' ,"+"'"+ ProductImage_list[image]['pk']+"'"+')" name="newimage" id="ImageChangeInput"/>'+
+                                '<label for="'+ ProductImage_list[image]['pk'] + ProductImage_list[image]['fields']['product'] +'"><img class="img-fluid" style="margin-top: 10px;" src="/' +ProductImage_list[image]['fields']['image']+ '" alt="Product Image 2">'+
+                                                    '<a style="cursor: pointer;" onclick="DeleteProductImage('+ProductImage_list[image]["fields"]["product"]+','+ProductImage_list[image]['pk']+')">Удалить</a>')
+                    }
+                    $('#ProductImagesBlock').append(
+                        '<div class="plus_div align-self-center">'+
+                        '<label for="NewImageInput" class="plus">'+
+                                '<input type="file" style="display:none;" name="NewAddingImage" id="NewImageInput" onchange="AddNewProductImage(product_id='+ProductImage_list[0]["fields"]["product"] +')"/>'+
+                        '</label>'+
+                        '</div>'
+                        )
+                } 
+    })
+        
+    }
+
+function DeleteProductImage(Product,Imageid){
+    console.log(Product)
+    console.log(Imageid)
+
+    $.ajax({
+        url: "/DeleteProductImage/",
+        type: 'POST',
+        data: {'ImageId':Imageid,'ProductId':Product},
+        success: console.log('Фотография успешно удалена!')
+    })
+}

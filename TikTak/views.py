@@ -12,7 +12,7 @@ from Shop_cart.models import Cart
 from .models import Product, ImageGallery
 from .RegAndLogin_services import _registration_user_, _login_user_
 from .Product_services import _get_a_product_list_without_dublicate, _get_user_liked_products_, _get_filtered_products_, \
-    _get_product_pagination_, _delete_product_,_add_new_product_
+    _get_product_pagination_, _delete_product_,_add_new_product_, _change_product_image_
 
 product = Product.objects.all()
 
@@ -87,6 +87,7 @@ class ProductView:
     @csrf_exempt
     def EditingProduct(self, Product_id):
         ProductById = Product.objects.get(id=Product_id)
+        ProductImagesByProduct = ImageGallery.objects.filter(product=ProductById).order_by('-added_at')
         if self.POST:
             ProductById.Product_name = self.POST.get('changed_product_name')
             ProductById.Product_price = self.POST.get('Product_price')
@@ -94,43 +95,46 @@ class ProductView:
             ProductById.Product_brand = self.POST.get('Product_brand')
             ProductById.Product_characteristics = self.POST.get('Product_characteristics')
             Product.for_which_gender = self.POST.get('changed_for_which_gender')
-            return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById})
-        return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById})
+            return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById, 'ProductImages': ProductImagesByProduct})
+        return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById, 'ProductImages': ProductImagesByProduct})
 
     @csrf_exempt
-    def AddOrChangeProductImage(self):
-        new_image = self.FILES.get('upload_image')
-        ProductId = self.POST.get('Product_id')
-        ProductImageUrl = self.POST.get('Old_product_picture')
-        new_adding_image = self.FILES.get('NewAddingImage')
-        prod = Product(id=ProductId)
-
-        productGalleryObject = ImageGallery.objects.filter(product=prod)
-        if new_adding_image:
-            productGalleryObject = ImageGallery()
-            productGalleryObject.image = new_adding_image
-            productGalleryObject.product = prod
-            productGalleryObject.save()
-
-        for i in productGalleryObject:
-            if i.image == str(ProductImageUrl):
-                print('=====================')
-                print('сущ. фотка:')
-                print(i.image)
-                print('---------------------')
-                print(new_image)
-                print('---------------------')
-                print('Старая фотка:')
-                print(ProductImageUrl)
-                print('=====================')
-
-                example = ImageGallery.objects.get(product=prod, image=ProductImageUrl)
-                example.image = new_image
-                example.save()
-
-                break
+    def AddOrChange_ProductImage(self):
+        # new_image = self.FILES.get('upload_image')
+        # ProductId = self.POST.get('Product_id')
+        # ProductImageUrl = self.POST.get('Old_product_picture')
+        # new_adding_image = self.FILES.get('NewAddingImage')
+        # prod = Product(id=ProductId)
+        #
+        # productGalleryObject = ImageGallery.objects.filter(product=prod)
+        # if new_adding_image:
+        #     productGalleryObject = ImageGallery()
+        #     productGalleryObject.image = new_adding_image
+        #     productGalleryObject.product = prod
+        #     productGalleryObject.save()
+        # try:
+        #     example = ImageGallery.objects.get(product=prod, id=ProductImageUrl)
+        #     example.image = new_image
+        #     example.save()
+        # except Exception:
+        #     print(Exception)
 
         return JsonResponse({"fuck": "yes mother fuck'er"})
+
+    @csrf_exempt
+    def ChangeProductImage(self):
+        return _change_product_image_(self)
+
+
+    @csrf_exempt
+    def _delete_product_image_(self):
+        productId = self.POST.get('ProductId')
+        imageId = self.POST.get('ImageId')
+        productById = Product.objects.get(id=productId)
+        ImageGallery.objects.get(product=productById, id=imageId).delete()
+        ImageGallery.save(self)
+        return JsonResponse('yes')
+
 '''##################################### SignIn|SignUp section start ##################################'''
 
 

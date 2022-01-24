@@ -14,7 +14,9 @@ urlpatterns = [
     path('add_new_product/', ProductView.add_new_product, name='A_N_P'),
     path('DeleteProduct/', ProductView.DeleteProduct, name='DeleteProduct'),
     path('EditingProduct/<int:Product_id>', ProductView.EditingProduct, name='Product_edit'),
-    path('ChangeProductImage/', ProductView.AddOrChangeProductImage , name='ChangeProductImage'),
+    # path('ChangeProductImage/', ProductView.AddOrChangeProductImage , name='ChangeProductImage'),
+    path('DeleteProductImage/', ProductView._delete_product_image_, name='DeleteProductImage'),
+    path('ChangeProductImage/', ProductView.ChangeProductImage, name='ChangeProductImage'),
 
     path('login/', RegAndLoginView.login_view, name='login'),
     path('register/', RegAndLoginView.register_view, name='register'),

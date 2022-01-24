@@ -51,20 +51,19 @@
 
 	                                <!--First slide-->
 	                                <div class="carousel-item active">
-	                                    <div class="row ">
-	                                        {% for image in product.images.all %}
+	                                    <div class="row " id="ProductImagesBlock">
+	                                        {% for image in ProductImages %}
 	                                        <div class="col-4 old_product_images_div">
-	                                                <input type="file" style="display:none;" name="newimage" id="ImageChangeInput" onchange="AddOrChangeProductImage(data='{{product.id}}',dataImage= '{{image.image}}')"/>
-	                                                <label for="ImageChangeInput"><img class="img-fluid" style="margin-top: 10px;" src="{{image.image.url}}" alt="Product Image 2"></label>
-
+	                                        		<a>{{image.id}}</a>
+	                                                <input type="file" style="display:none;" id="{{image.id}}{{product.id}}" onchange="ChangeProductImage('{{product.id}}', '{{image.id}}')" name="newimage" id="ImageChangeInput"/>
+	                                                <label for="{{image.id}}{{product.id}}"><img class="img-fluid" style="margin-top: 10px;" src="{{image.image.url}}" alt="Product Image 2">
+	                                                <a style="cursor: pointer;" onclick="DeleteProductImage('{{product.id}}','{{image.id}}')">Удалить</a>
 	                                        </div>
 	                                        {% endfor %}
 
-
-
 	                                        <div class="plus_div align-self-center">
 											<label for="NewImageInput" class="plus">
-	                                                <input type="file" style="display:none;" name="NewAddingImage" id="NewImageInput" onchange="AddOrChangeProductImage(product_id='{{product.id}}',Image= '{{image.image}}')"/>
+	                                                <input type="file" style="display:none;" name="NewAddingImage" id="NewImageInput" onchange="AddNewProductImage(product_id='{{product.id}}',Image= '{{image.image}}')"/>
 											</label>
 
 	                                        </div>
