@@ -94,32 +94,11 @@ class ProductView:
             ProductById.Product_color = self.POST.get('Product_color')
             ProductById.Product_brand = self.POST.get('Product_brand')
             ProductById.Product_characteristics = self.POST.get('Product_characteristics')
-            Product.for_which_gender = self.POST.get('changed_for_which_gender')
+            ProductById.for_which_gender = self.POST.get('changed_for_which_gender')
+
+            ProductById.save()
             return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById, 'ProductImages': ProductImagesByProduct})
         return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById, 'ProductImages': ProductImagesByProduct})
-
-    @csrf_exempt
-    def AddOrChange_ProductImage(self):
-        # new_image = self.FILES.get('upload_image')
-        # ProductId = self.POST.get('Product_id')
-        # ProductImageUrl = self.POST.get('Old_product_picture')
-        # new_adding_image = self.FILES.get('NewAddingImage')
-        # prod = Product(id=ProductId)
-        #
-        # productGalleryObject = ImageGallery.objects.filter(product=prod)
-        # if new_adding_image:
-        #     productGalleryObject = ImageGallery()
-        #     productGalleryObject.image = new_adding_image
-        #     productGalleryObject.product = prod
-        #     productGalleryObject.save()
-        # try:
-        #     example = ImageGallery.objects.get(product=prod, id=ProductImageUrl)
-        #     example.image = new_image
-        #     example.save()
-        # except Exception:
-        #     print(Exception)
-
-        return JsonResponse({"fuck": "yes mother fuck'er"})
 
     @csrf_exempt
     def ChangeProductImage(self):

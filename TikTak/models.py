@@ -97,5 +97,5 @@ class Product(models.Model):
 class ImageGallery(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='TikTak/static/img', max_length=450)
-    added_at = models.DateTimeField(auto_now=True)
+    added_at = models.DateTimeField(auto_now_add=True)
     id = str(Product.id)+ str(added_at)

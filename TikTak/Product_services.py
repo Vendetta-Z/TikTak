@@ -144,6 +144,8 @@ def _change_product_image_(self):
     OldAddedTime = Image.added_at
     Image.image = NewImage
     Image.added_at = OldAddedTime
+    print(OldAddedTime)
+    print(Image.added_at)
     Image.save()
     data = {
         'ProductImages': serializers.serialize('json', ImageGallery.objects.filter(product=productID).order_by('-added_at')),

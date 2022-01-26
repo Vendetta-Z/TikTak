@@ -172,6 +172,42 @@ function AddNewProductImage(product_id,OldImageId){
 }
     
 
+function AddProductChanges(Product_id, OldImageId){
+    let Product_id = document.getElementById('Product_id')
+    let OldImageId = document.getElementById('OldImageId')
+
+    let changed_product_name = document.getElementById('changed_product_name')
+    let changed_for_which_gender = document.getElementById('changed_for_which_gender')
+    let Product_price = document.getElementById('Product_price')
+    let Product_brand = document.getElementById('Product_brand')
+    let Product_color = document.getElementById('Product_color')
+    let Product_characteristics = document.getElementById('Product_characteristicsProduct_characteristics')
+
+    formdata = new FormData()
+    // formdata.append('product_id': product_id)
+    // formdata.append('OldImageId': OldImageId)
+    formdata.append('Product_id': Product_id)
+    formdata.append('OldImageId': OldImageId)
+    
+    formdata.append('changed_product_name': changed_product_name)
+    formdata.append('Product_price': changed_product_name)
+    formdata.append('Product_color': changed_product_name)
+    formdata.append('Product_brand': changed_product_name)
+    formdata.append('Product_characteristics': changed_product_name)
+    formdata.append('changed_for_which_gender': changed_product_name)
+    formdata.append('changed_product_name': changed_product_name)
+
+    $.ajax({
+        url: "/EditingProduct/",
+        type: 'POST',
+        data: formdata,
+        success:function(data){
+            alert('Ура товар был успешно изменён!')
+        }
+    })
+}
+
+
 function ChangeProductImage(Product, Imageid){
     var inputbyid = document.getElementById(Imageid+Product);
     var formdata = new FormData();
@@ -190,12 +226,9 @@ function ChangeProductImage(Product, Imageid){
         processData: false,
         contentType: false,
 
-
-
-        // <input type="file" style="display:none;" id="486524" onchange="ChangeProductImage('524', '486')" name="newimage">
-        // <input type="file" style="display:none;" id="486524" onchange="ChangeProductImage('524', '486')" name="newimage">
         success:function(data){
                     let ProductImage_list = JSON.parse(data['ProductImages'])
+                    $('#ProductMainImage_img').html('<img class="main-card-img img-fluid" src="/'+ ProductImage_list[0]['fields']['image'] +'" alt="Card image cap">')
                     console.log(ProductImage_list)
                     $('#ProductImagesBlock').html(' ');
                     for (var image in ProductImage_list){
@@ -228,5 +261,4 @@ function DeleteProductImage(Product,Imageid){
         type: 'POST',
         data: {'ImageId':Imageid,'ProductId':Product},
         success: console.log('Фотография успешно удалена!')
-    })
-}
+    })}
