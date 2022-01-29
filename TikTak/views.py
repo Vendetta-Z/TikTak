@@ -12,7 +12,9 @@ from Shop_cart.models import Cart
 from .models import Product, ImageGallery
 from .RegAndLogin_services import _registration_user_, _login_user_
 from .Product_services import _get_a_product_list_without_dublicate, _get_user_liked_products_, _get_filtered_products_, \
-    _get_product_pagination_, _delete_product_,_add_new_product_, _change_product_image_
+    _get_product_pagination_, _delete_product_,_add_new_product_, _change_product_image_ , _EditingProduct_ , _add_product_image_,\
+    _delete_product_image_
+
 
 product = Product.objects.all()
 
@@ -101,18 +103,21 @@ class ProductView:
         return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById, 'ProductImages': ProductImagesByProduct})
 
     @csrf_exempt
+    def EditingProduct_2(self):
+        return _EditingProduct_(self)
+
+    @csrf_exempt
+    def addNewProductImage(self):
+        return _add_product_image_(self)
+
+    @csrf_exempt
     def ChangeProductImage(self):
         return _change_product_image_(self)
 
 
     @csrf_exempt
     def _delete_product_image_(self):
-        productId = self.POST.get('ProductId')
-        imageId = self.POST.get('ImageId')
-        productById = Product.objects.get(id=productId)
-        ImageGallery.objects.get(product=productById, id=imageId).delete()
-        ImageGallery.save(self)
-        return JsonResponse('yes')
+        return _delete_product_image_(self)
 
 '''##################################### SignIn|SignUp section start ##################################'''
 

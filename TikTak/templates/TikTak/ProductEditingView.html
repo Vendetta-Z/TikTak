@@ -27,7 +27,8 @@
 <body>
 
      <section class="bg-light">
-     	<form action="/EditingProduct/{{product.id}}" method='POST'>
+     	<!-- action="/EditingProduct/{{product.id}}" method='POST' -->
+     	<form>
         {%csrf_token%}
 	        <div class="container pb-5">
 	            <div class="row">
@@ -44,6 +45,18 @@
 	                            </a>
 	                        </div>
 	                        <!--End Controls-->
+
+											<p style="
+											position: fixed;
+											width: 25%;
+											z-index: 9;
+											left: 75%;
+											top: 5%;
+											height:7%;
+											color:white;
+											background-color:black;">
+												Изменения успешно были добавлены!
+											</p>
 	                        <!--Start Carousel Wrapper-->
 	                        <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
 	                            <!--Start Slides-->
@@ -56,14 +69,14 @@
 	                                        <div class="col-4 old_product_images_div">
 	                                        		<a>{{image.id}}</a>
 	                                                <input type="file" style="display:none;" id="{{image.id}}{{product.id}}" onchange="ChangeProductImage('{{product.id}}', '{{image.id}}')" name="newimage" id="ImageChangeInput"/>
-	                                                <label for="{{image.id}}{{product.id}}"><img class="img-fluid" style="margin-top: 10px;" src="{{image.image.url}}" alt="Product Image 2">
+	                                                <label for="{{image.id}}{{product.id}}"><img class="img-fluid" style="margin-top: 10px;" src="{{image.image.url}}" alt="Product Image 2"></label>
 	                                                <a style="cursor: pointer;" onclick="DeleteProductImage('{{product.id}}','{{image.id}}')">Удалить</a>
 	                                        </div>
 	                                        {% endfor %}
 
 	                                        <div class="plus_div align-self-center">
 											<label for="NewImageInput" class="plus">
-	                                                <input type="file" style="display:none;" name="NewAddingImage" id="NewImageInput" onchange="AddNewProductImage(product_id='{{product.id}}',Image= '{{image.image}}')"/>
+	                                                <input type="file" style="display:none;" name="NewAddingImage" id="NewImageInput" onchange="AddNewProductImage(product_id='{{product.id}}')"/>
 											</label>
 
 	                                        </div>
@@ -133,7 +146,7 @@
 		                                </div>
 		                                <div class="row pb-3">
 		                                    <div class="col d-grid">
-		                                        <button  id="SubmitProductChangesBtn" onclick="" class="btn btn-success text-white mt-2" type="submit"  name="">Подтвердить изменения</button>
+		                                        <button  id="SubmitProductChangesBtn" onclick="ChangeProductParams()" class="btn btn-success text-white mt-2" type="button"  name="">Подтвердить изменения</button>
 
 		                                        <!--<button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>-->
 		                                    </div>
