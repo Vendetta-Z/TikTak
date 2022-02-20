@@ -206,35 +206,105 @@ function AddNewProductImage(product_id){
 }
     
 
-function ChangeProductParams(){
-    let Product_id = document.getElementById('product_id');
+function ChangeProductParams(P_id){
+    let Product_id = P_id;
     let OldImageId = document.getElementById('oldImageId');
 
-    let changed_product_name = document.getElementById('changed_product_name');
-    let changed_for_which_gender = document.getElementById('changed_for_which_gender');
-    let Product_price = document.getElementById('Product_price');
-    let Product_brand = document.getElementById('Product_brand');
-    let Product_color = document.getElementById('Product_color');
-    let Product_characteristics = document.getElementById('Product_characteristicsProduct_characteristics');
+    let changed_product_name = document.getElementById('changed_product_name').value;
+    let changed_for_which_gender = document.getElementById('changed_for_which_gender').value;
+    let Product_price = document.getElementById('Product_price').value;
+    let Product_brand = document.getElementById('Product_brand').value;
+    let Product_color = document.getElementById('Product_color').value;
+    let Product_characteristics = document.getElementById('Product_characteristics').value;
 
     formdata = new FormData();
-    formdata.append('Product_id', Product_id);
     formdata.append('OldImageId', OldImageId);
-    
-    formdata.append('changed_product_name', changed_product_name);
-    formdata.append('Product_price', changed_product_name);
-    formdata.append('Product_color', changed_product_name);
-    formdata.append('Product_brand', changed_product_name);
-    formdata.append('Product_characteristics', changed_product_name);
-    formdata.append('changed_for_which_gender', changed_product_name);
-    formdata.append('changed_product_name', changed_product_name);
+    formdata.append('Product_name', changed_product_name);
+    formdata.append('Product_price', Product_price);
+    formdata.append('Product_color', Product_color);
+    formdata.append('Product_brand', Product_brand);
+    formdata.append('Product_characteristics', Product_characteristics);
+    formdata.append('changed_for_which_gender', 'Boys');
+    formdata.append('Product_id', Product_id);
+
+
+    // for(let[key, value] of formdata){
+    //     console.log(`${key}:${value}`)
+    // }
+
+    // for(let[key, value] of formdata){
+    //     if (formdata.get(key) === ''){
+    //         formdata.delete(key);
+    //     }
+    //     if(formdata.get(key) === null){
+    //         formdata.delete(key)
+    //     }
+    // }
+    // console.log('====================================')
+
+    // for(let[key, value] of formdata){
+    //     console.log(`${key}:${value}`)
+    // }
 
     $.ajax({
-        url: "/EditingProduct_2/",
+        url: '/EditingProduct_ajax/',
         type: 'POST',
         data: formdata,
+        
+        processData: false,
+        contentType: false,
         success:function(data){
-            alert('Ура товар был успешно изменён!');
+            call_popup_with_text()
+            var Product = data['product']
+            $('#block_with_fields_for_changing_product_parameters').html(`<h1><input name='changed_product_name' id='changed_product_name' type="text" placeholder="`+ Product['fields']['Product_name']+ `"></h1>                                    
+                                    <select name="changed_for_which_gender" id="changed_for_which_gender">
+                                            <option value="Boys" >Для мальчиков</option>
+                                            <option value="Girls" >Для девочек</option>
+                                    </select>
+
+                                    <!--{% if product.for_which_gender == 'Girls'%}
+                                        <h6>Для девочек</h6>
+                                    {% else %}
+                                        <h6>Для Мальчиков</h6>
+                                    {% endif %} -->
+
+                                    <p class="h3 py-2">Цена: <input type="number" name="Product_price" id="Product_price" placeholder="`+ Product['fields']['Product_price'] +`"> p.</p>
+
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <h6>Производитель:</h6>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <p class="text-muted"><strong><input type="text" name="Product_brand" id="Product_brand" placeholder="`+ Product['fields']['Product_brand'] +`"></strong></p>
+                                        </li>
+                                    </ul>
+
+                                    <h6>Описание:</h6>
+                                    <p>`+ Product['fields']['Product_description'] +`</p>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <h6>Цвета :</h6>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <p class="text-muted"><strong><input type="text" id="Product_color"  name="Product_color" placeholder="`+ Product['fields']['Product_color'] +`"></strong></p>
+                                        </li>
+                                    </ul>
+
+                                    <h6>Характеристики:</h6><input type="text" name="Product_characteristics" id="Product_characteristics" placeholder="`+ Product['fields']['Product_characteristics'] +`">
+
+                                        <input type="hidden" name="product-title" value="Activewear">
+                                        <div class="row">
+                                           
+                                            </div>
+                                        </div>
+                                        <div class="row pb-3">
+                                            <div class="col d-grid">
+                                                <button  id="SubmitProductChangesBtn" onclick="ChangeProductParams('`+ Product['pk'] +`')" class="btn btn-success text-white mt-2" type="button"  name="">Подтвердить изменения</button>
+
+                                                <!--<button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>-->
+                                            </div>
+                                        </div>`)
+
         }})
 }
     
@@ -282,6 +352,7 @@ function ChangeProductImage(Product, Imageid){
                         )
                 } 
     })
+    call_popup_with_text()
         
     }
 
@@ -313,3 +384,32 @@ function DeleteProductImage(Product,Imageid){
                         )
         }
     })}
+
+function call_popup_with_text(SomeText){
+    let popup = document.getElementById('Popup_function_notification')
+    popup.innerHTML ='Изменения были успешно добавлены'
+    popup.style.display = "block"
+    AnimatePopup(popup, 5 , 3000)
+    setTimeout(()=>{popup.style.display = "none"}, 2000);}
+
+function AnimatePopup(variable , animationspeed, second ){
+    let start = Date.now();
+    let timer = setInterval(function() {
+  // сколько времени прошло с начала анимации?
+      let timePassed = Date.now() - start;
+
+    if (timePassed >= second) {
+        clearInterval(timer); // закончить анимацию через 2 секунды
+        return;
+    }
+    // отрисовать анимацию на момент timePassed, прошедший с начала анимации
+  draw(timePassed);
+
+    }, 20);
+
+    // в то время как timePassed идёт от 0 до 2000
+    // left изменяет значение от 0px до 400px
+    function draw(second) {
+      variable.style.right = second / animationspeed + 'px';
+    }
+    draw(second)}

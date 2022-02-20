@@ -12,7 +12,7 @@ from Shop_cart.models import Cart
 from .models import Product, ImageGallery
 from .RegAndLogin_services import _registration_user_, _login_user_
 from .Product_services import _get_a_product_list_without_dublicate, _get_user_liked_products_, _get_filtered_products_, \
-    _get_product_pagination_, _delete_product_,_add_new_product_, _change_product_image_ , _EditingProduct_ , _add_product_image_,\
+    _get_product_pagination_, _delete_product_, _add_new_product_, _change_product_image_, _editing_product_, _add_product_image_,\
     _delete_product_image_
 
 
@@ -31,6 +31,13 @@ class ProductView:
             'Liked_goods_count': len(_get_user_liked_products_(self)),
             'page_obj': _get_product_pagination_(self, 'liked_product'),
             'Categorys': Product.P_Categorys
+        })
+
+    def favorite(self):
+        return render(self, 'TikTak/Favorite.html', {
+            'Like_product': _get_user_liked_products_(self),
+            'Liked_goods_count': len(_get_user_liked_products_(self)),
+            'cart_items': Cart.get_items_count(self=self),
         })
 
     def shop_single_view(self, pk):
@@ -91,6 +98,7 @@ class ProductView:
         ProductById = Product.objects.get(id=Product_id)
         ProductImagesByProduct = ImageGallery.objects.filter(product=ProductById).order_by('-added_at')
         if self.POST:
+
             ProductById.Product_name = self.POST.get('changed_product_name')
             ProductById.Product_price = self.POST.get('Product_price')
             ProductById.Product_color = self.POST.get('Product_color')
@@ -103,8 +111,8 @@ class ProductView:
         return render(self, 'TikTak/ProductEditingView.html', {'product': ProductById, 'ProductImages': ProductImagesByProduct})
 
     @csrf_exempt
-    def EditingProduct_2(self):
-        return _EditingProduct_(self)
+    def EditingProduct_ajax(self):
+        return _editing_product_(self)
 
     @csrf_exempt
     def addNewProductImage(self):

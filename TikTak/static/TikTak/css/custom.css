@@ -21,6 +21,9 @@
 
 }
 
+.carousel-item{
+    height: 600px;
+}
 
 .old_product_images_div img{
     filter: brightness(100%);

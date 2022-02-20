@@ -45,14 +45,15 @@
 	                            </a>
 	                        </div>
 	                        <!--End Controls-->
-
-											<p style="
+	                        				<p id="Popup_function_notification" style="
 											position: fixed;
 											width: 25%;
 											z-index: 9;
 											left: 75%;
+											font-size: 90%;
+											padding: 0.5%;
 											top: 5%;
-											height:7%;
+											display: none;
 											color:white;
 											background-color:black;">
 												Изменения успешно были добавлены!
@@ -100,7 +101,7 @@
 	                <!-- col end -->
 	                <div class="col-lg-7 mt-5">
 	                    <div class="card">
-	                        <div class="card-body" style="height: 100%;">
+	                        <div class="card-body" style="height: 100%;" id='block_with_fields_for_changing_product_parameters'>
 	                        		<h1><input name='changed_product_name' id='changed_product_name' type="text" placeholder="{{product.Product_name}}"></h1>
 		                            <!-- <h1 class="h2">{{product.Product_name}}</h1> -->
  									
@@ -146,7 +147,7 @@
 		                                </div>
 		                                <div class="row pb-3">
 		                                    <div class="col d-grid">
-		                                        <button  id="SubmitProductChangesBtn" onclick="ChangeProductParams()" class="btn btn-success text-white mt-2" type="button"  name="">Подтвердить изменения</button>
+		                                        <button  id="SubmitProductChangesBtn" onclick="ChangeProductParams('{{product.id}}')" class="btn btn-success text-white mt-2" type="button"  name="">Подтвердить изменения</button>
 
 		                                        <!--<button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Add To Cart</button>-->
 		                                    </div>

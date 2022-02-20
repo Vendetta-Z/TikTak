@@ -115,6 +115,7 @@ def _add_new_product_(self):
                    'ProductList': ProductList,
                    'formset': ImageFormSet(queryset=ImageGallery.objects.none())})
 
+
 def _delete_product_(user, Id):
     Product.objects.get(id=Id).delete()
 
@@ -127,8 +128,8 @@ def _delete_product_(user, Id):
         'ProductList': serializers.serialize('json', Product.objects.all()),
         'ProductImages': json.dumps(all_product_image_list, default=obj_dict),
     }
-    print(data)
     return JsonResponse(data, safe=False)
+
 
 def _add_product_image_(self):
     """Добавленяет изображения для товара , возвращая список , для дальнейщего динами-го отображения"""
@@ -145,6 +146,7 @@ def _add_product_image_(self):
 
     return JsonResponse({'ProductImageList': ProductImageList})
 
+
 def _change_product_image_(self):
 
     """Изменяет картины товара , возвращая список фотографий товара, для динамичного отображения их в последствии"""
@@ -157,13 +159,12 @@ def _change_product_image_(self):
     OldAddedTime = Image.added_at
     Image.image = NewImage
     Image.added_at = OldAddedTime
-    print(OldAddedTime)
-    print(Image.added_at)
     Image.save()
     data = {
         'ProductImages': serializers.serialize('json', ImageGallery.objects.filter(product=productID).order_by('-added_at')),
     }
     return JsonResponse(data)
+
 
 def _delete_product_image_(self):
     productId = self.POST.get('ProductId')
@@ -176,24 +177,27 @@ def _delete_product_image_(self):
     }
     return JsonResponse(data)
 
-def _EditingProduct_(self):
+
+def _editing_product_(self):
     """Изменяет параметры товара , такие как название,размеры,цвета"""
-    print('-------------------------')
-    print('fuck')
-    ProductById = Product.objects.get(id=Product_id)
-    ProductImagesByProduct = ImageGallery.objects.filter(product=ProductById).order_by('-added_at')
     if self.POST:
-        ProductById.Product_name = self.POST.get('changed_product_name')
+        Product_id = self.POST.get('Product_id')
+        ProductById = Product.objects.get(id=Product_id)
+
+        ProductById.Product_name = self.POST.get('Product_name')
         ProductById.Product_price = self.POST.get('Product_price')
         ProductById.Product_color = self.POST.get('Product_color')
         ProductById.Product_brand = self.POST.get('Product_brand')
         ProductById.Product_characteristics = self.POST.get('Product_characteristics')
         ProductById.for_which_gender = self.POST.get('changed_for_which_gender')
-
         ProductById.save()
 
-        return JsonResponse({'product': serializers.serialize('json', ProductById),
-                             'ProductImages': serializers.serialize('json', ProductImagesByProduct) })
+        ProductImagesByProduct = ImageGallery.objects.filter(product=ProductById)
 
+        return JsonResponse({'product': serializers.serialize('json', [ProductById]),
+                             'ProductImages': serializers.serialize('json', ProductImagesByProduct)})
+
+    ProductById = Product.objects.get(id=Product_id)
+    ProductImagesByProduct = ImageGallery.objects.filter(product=ProductById).order_by('-added_at')
     return render(self, 'TikTak/ProductEditingView.html',
                   {'product': ProductById, 'ProductImages': ProductImagesByProduct})

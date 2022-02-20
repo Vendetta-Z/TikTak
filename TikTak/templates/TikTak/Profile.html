@@ -31,39 +31,5 @@
         <a href="{% url 'A_N_P'%}" class="add_new_product_btn">Добавить новый товар</a>
 
     </div>
-
-    Like Product list:
-<div class="row">
-    <div class="row"  id="block_with_liked_products">
-        {% for Product in Like_product %}
-        <div class="col-md-3 recently_product">
-            <div class="card mb-4 product-wap  rounded-0">
-                <div class="card rounded-1">
-                    <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.get_first_image}}">
-                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
-                        <ul class="list-unstyled">
-                            <li><p class="btn btn-success text-white"
-                                   onclick="Like_product_btn_remove({{Product.id}})"
-                                   id='Like_product_btn_id_{{Product.id}}'
-                                   onload="is_like()"
-                                   Product_id='{{Product.id}}'>&#128147</p></li>
-
-                            <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="far fa-eye"></i></a></li>
-                            <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="fas fa-cart-plus"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <a href="{{Product.id}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a><br>
-                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                        <li>M/L/X/XL</li>
-                    </ul>
-                    <p class="text-center mb-0 price">{{Product.Product_price}} p.</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
 </body>
 </html>
