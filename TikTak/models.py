@@ -99,3 +99,15 @@ class ImageGallery(models.Model):
     image = models.ImageField(upload_to='TikTak/static/img', max_length=450)
     added_at = models.DateTimeField(auto_now_add=True)
     id = str(Product.id)+ str(added_at)
+
+
+class Discount(models.Model):
+    product = models.ForeignKey(Product,unique=True, on_delete=models.CASCADE, related_name='product')
+    discount_percentage = models.IntegerField(null=False)
+    when_set_discount_time = models.DateTimeField(auto_now=True)
+    when_discount_time_out = models.IntegerField(null=False)
+
+    def get_sale(self):
+        product_price = self.product.Product_price
+        product_price_discount_percentage = (product_price / 100) * self.discount_percentage
+        return product_price - product_price_discount_percentage

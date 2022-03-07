@@ -212,26 +212,27 @@
         <div class="row">
 
             <div class="row" >
-                {% for Product in page_obj %}
+                {% for item in Discount_items %}
                     <div class="col-md-3">
                         <div class="card mb-4 product-wap  rounded-0">
                             <div class="card rounded-1">
-                                <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{Product.get_first_image}}">
+                                <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{item.product.get_first_image}}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white" href="{{Product.id}}/"><i class="far fa-heart"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="far fa-eye"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="{{Product.id}}/"><i class="fas fa-cart-plus"></i></a></li>
+                                        <li><a class="btn btn-success text-white" href="{{item.product.id}}/"><i class="far fa-heart"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{item.product.id}}/"><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="{{item.product.id}}/"><i class="fas fa-cart-plus"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <a href="{{Product.id}}/" class="h3 text-decoration-none">{{Product.Product_name}}</a>
+                                <a href="{{Product.id}}/" class="h3 text-decoration-none">{{item.product.Product_name}}</a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                     <li>M/L/X/XL</li>
 
                                 </ul>
-                                <p class="text-center mb-0 price">{{Product.Product_price}} p.</p>
+                                <p class="text-center mb-0 price">{{ item.get_sale  }} p.</p>
+                                <!-- <p class="text-center mb-0 price">{{ Product.Product_price }} p.</p> -->
                             </div>
                         </div>
                     </div>
@@ -357,7 +358,107 @@
         </div>
     </div>
     </section>
-    <!-- End Featured Product -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section class="bg-light">
+        <div class="container py-5">
+            <div class="col-lg-3 categorys_block">
+            <h1 class="h2 pb-4">Новостной блог</h1>
+        </div>
+
+
+        <div class="row">
+
+            <div class="row" >
+                {% for News in AllNews %}
+                    <div class="col-md-3">
+                        <div class="card mb-4 product-wap  rounded-0">
+                            <div class="card rounded-1">
+                                <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{News.media}}">
+                            </div>
+                            <div class="card-body">
+                                <h5>{{News.title}}</h5>
+                                <p class="text-center mb-0 price">{% if News.author == None%} ... {% else %} {{News.author}} {% endif %}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
+           <div div="row">
+                    <div class="pagination">
+                    <ul class="pagination pagination-lg justify-content-end">
+
+                            <!-- onclick="asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber=1)" -->
+
+                         {% if AllNews.has_previous %}
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" 
+                                href='?NewsPageNumber=1'
+                                tabindex="-1">
+                                &laquo;First
+                            </a>
+
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" 
+                                onclick="asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber={{AllNews.previous_page_number}})" tabindex="-1">
+                               {{AllNews.previous_page_number}}
+                            </a>
+
+
+                         {% endif %}
+
+                            <a class="Product_Page_Numeration active  page-link   rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">
+                                {{AllNews.number}}
+                            </a>
+
+
+
+                         {% if AllNews.has_next %}
+
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" 
+                                onclick="asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber={{AllNews.next_page_number}})" tabindex="-1">
+                                {{AllNews.next_page_number}}
+                            </a>
+
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" 
+                                href="?NewsPageNumber={{ AllNews.paginator.num_pages }}"
+                                onclick="asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber={{ AllNews.paginator.num_pages }})" tabindex="-1">
+                                Last &raquo;
+                            </a>
+
+                         {% endif %}
+                    </ul>
+                </div>
+           </div>
+        </div>
+    </div>
+    </section>
 
     <!-- Start Footer -->
     {% include './Footer.html'%}

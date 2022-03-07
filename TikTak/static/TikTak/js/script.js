@@ -1,7 +1,21 @@
 
 
 
-
+function asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber){
+    let data = {
+        NewsPageNumber:NewsPageNumber,
+    }
+    $.ajax({
+        method:'GET',
+        dataType:'json',
+        data:data,
+        url:'news/get_news_by_number',
+        success:function(data){
+            console.log('f')        
+            console.log(data)
+        }
+    })
+} 
 
 
 function output_added_picture_for_the_product(input){

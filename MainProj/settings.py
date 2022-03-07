@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'TikTak.apps.TiktakConfig',
     'Shop_cart',
     'Like',
+    'newsApi',
 ]
 
 

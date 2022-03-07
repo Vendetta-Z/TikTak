@@ -27,6 +27,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page='index'), name='logout'),
 
     path('cart/', include('Shop_cart.urls')),
+    path('news/', include('newsApi.urls')),
     path('Like/', include('Like.urls')),
 ]
 

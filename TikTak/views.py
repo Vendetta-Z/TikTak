@@ -8,13 +8,14 @@ from django.http import JsonResponse
 
 from Like.models import Like
 from Shop_cart.models import Cart
+from newsApi import views as NewsApiViews
 
-from .models import Product, ImageGallery
+
+from .models import Product, ImageGallery, Discount
 from .RegAndLogin_services import _registration_user_, _login_user_
 from .Product_services import _get_a_product_list_without_dublicate, _get_user_liked_products_, _get_filtered_products_, \
     _get_product_pagination_, _delete_product_, _add_new_product_, _change_product_image_, _editing_product_, _add_product_image_,\
     _delete_product_image_
-
 
 product = Product.objects.all()
 
@@ -22,12 +23,16 @@ product = Product.objects.all()
 class ProductView:
 
     def index(self):
+        for i in Product.objects.all():
+            print(i.id)
         """Загружает главную страницу , с блоками :недавно добавления """
 
         return render(self, 'TikTak/index.html', {
             'cart_items': Cart.get_items_count(self=self),
             'recently_added_Product': Product.get_recently_added_products(Product(), 4),  # check how it's work
             'users': User,
+            'AllNews': NewsApiViews._get_Googlenews_api_response(self),
+            'Discount_items': Discount.objects.all(),
             'Liked_goods_count': len(_get_user_liked_products_(self)),
             'page_obj': _get_product_pagination_(self, 'liked_product'),
             'Categorys': Product.P_Categorys

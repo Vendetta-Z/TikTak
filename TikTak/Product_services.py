@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 
 
 import json
+import requests
 
 from .forms import AddNewProductForm, ImageNewProduct
 from .models import Product, ImageGallery
