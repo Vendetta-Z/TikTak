@@ -12,10 +12,12 @@ urlpatterns = [
     path('Shop/', ProductView.shop_view, name='Shop'),
     path('favorite/', ProductView.favorite, name='favorite'),
     path('Profile/', ProductView.profile, name='Profile'),
+
     path('add_new_product/', ProductView.add_new_product, name='A_N_P'),
     path('DeleteProduct/', ProductView.DeleteProduct, name='DeleteProduct'),
     path('EditingProduct/<int:Product_id>', ProductView.EditingProduct, name='Product_edit'),
     path('EditingProduct_ajax/', ProductView.EditingProduct_ajax, name='Product_edit'),
+    path('Total_likes/', ProductView.get_product_total_likes, name='Get_total_likes'),
 
     # path('ChangeProductImage/', ProductView.AddOrChangeProductImage , name='ChangeProductImage'),
     path('AddNewProductImage/', ProductView.addNewProductImage , name='addNewProductImage'),

@@ -143,7 +143,7 @@
     <section >
         <div class="container py-5">
             <div class="col-lg-3 categorys_block">
-            <h1 class="h2 pb-4">Новинки года</h1>
+            <h1 class="h2 pb-4">Новое поступление</h1>
         </div>
 
         <div class="row">
@@ -392,14 +392,14 @@
         </div>
 
 
-        <div class="row">
+        <div class="row" id="block_with_news_tables">
 
             <div class="row" >
                 {% for News in AllNews %}
                     <div class="col-md-3">
                         <div class="card mb-4 product-wap  rounded-0">
                             <div class="card rounded-1">
-                                <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{News.media}}">
+                                <img class="card-img Product-image_sizing rounded-0 img-fluid" src="{{News.urlToImage}}">
                             </div>
                             <div class="card-body">
                                 <h5>{{News.title}}</h5>
@@ -415,25 +415,39 @@
            <div div="row">
                     <div class="pagination">
                     <ul class="pagination pagination-lg justify-content-end">
+                        <!-- {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ AllNews.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %} -->
 
                             <!-- onclick="asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber=1)" -->
 
                          {% if AllNews.has_previous %}
                             <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" 
                                 href='?NewsPageNumber=1'
-                                tabindex="-1">
+                                tabindex="1">
                                 &laquo;First
                             </a>
 
                             <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" 
-                                onclick="asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber={{AllNews.previous_page_number}})" tabindex="-1">
+                                href="?NewsPageNumber={{ AllNews.previous_page_number }}">
                                {{AllNews.previous_page_number}}
                             </a>
 
 
                          {% endif %}
 
-                            <a class="Product_Page_Numeration active  page-link   rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">
+
+                            <a class="Product_Page_Numeration active  page-link   rounded-0 mr-3 shadow-sm border-top-0 border-left-0" >
                                 {{AllNews.number}}
                             </a>
 
@@ -442,13 +456,12 @@
                          {% if AllNews.has_next %}
 
                             <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" 
-                                onclick="asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber={{AllNews.next_page_number}})" tabindex="-1">
+                                href="?NewsPageNumber={{ AllNews.next_page_number }}">
                                 {{AllNews.next_page_number}}
                             </a>
 
-                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0" 
-                                href="?NewsPageNumber={{ AllNews.paginator.num_pages }}"
-                                onclick="asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber={{ AllNews.paginator.num_pages }})" tabindex="-1">
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0"  
+                                href="?NewsPageNumber={{AllNews.paginator.num_pages}}">
                                 Last &raquo;
                             </a>
 

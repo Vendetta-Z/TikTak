@@ -72,6 +72,7 @@ class Product(models.Model):
         default=None,
     )
 
+
     @property
     def total_likes(self):
         return self.likes.count()
@@ -91,6 +92,7 @@ class Product(models.Model):
             first_image = self.images.first().image
         except AttributeError:
             first_image = self
+            return 'None'
         return first_image.url
 
 

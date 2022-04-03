@@ -15,7 +15,7 @@ from .models import Product, ImageGallery, Discount
 from .RegAndLogin_services import _registration_user_, _login_user_
 from .Product_services import _get_a_product_list_without_dublicate, _get_user_liked_products_, _get_filtered_products_, \
     _get_product_pagination_, _delete_product_, _add_new_product_, _change_product_image_, _editing_product_, _add_product_image_,\
-    _delete_product_image_
+    _delete_product_image_, get_product_total_likes
 
 product = Product.objects.all()
 
@@ -23,8 +23,6 @@ product = Product.objects.all()
 class ProductView:
 
     def index(self):
-        for i in Product.objects.all():
-            print(i.id)
         """Загружает главную страницу , с блоками :недавно добавления """
 
         return render(self, 'TikTak/index.html', {
@@ -86,7 +84,11 @@ class ProductView:
             'Like_product': _get_user_liked_products_(self),
             'Liked_goods_count': len(_get_user_liked_products_(self)),
             'cart_items': Cart.get_items_count(self=self),
+            'ProductList': Product.objects.all(),
         })
+
+    def get_product_total_likes(self):
+        return get_product_total_likes(self)
 
     @login_required
     def add_new_product(self):

@@ -70,8 +70,8 @@
 	                                        <div class="col-4 old_product_images_div">
 	                                        		<a>{{image.id}}</a>
 	                                                <input type="file" style="display:none;" id="{{image.id}}{{product.id}}" onchange="ChangeProductImage('{{product.id}}', '{{image.id}}')" name="newimage" id="ImageChangeInput"/>
-	                                                <label for="{{image.id}}{{product.id}}"><img class="img-fluid" style="margin-top: 10px;" src="{{image.image.url}}" alt="Product Image 2"></label>
-	                                                <a style="cursor: pointer;" onclick="DeleteProductImage('{{product.id}}','{{image.id}}')">Удалить</a>
+	                                                <label for="{{image.id}}{{product.id}}"><img class="img-fluid" style="margin-top: 10px;" src="{{image.image.url}}" alt="Product Image 2"></label><br>
+	                                                <a style="cursor: pointer; margin: 10px" onclick="DeleteProductImage('{{product.id}}','{{image.id}}')">Удалить</a>
 	                                        </div>
 	                                        {% endfor %}
 

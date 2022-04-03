@@ -7,6 +7,7 @@ from django.forms import modelformset_factory
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 
 
 import json
@@ -29,6 +30,16 @@ def _get_user_liked_products_(request):
     for id_in_product_liked_users in product_liked_user:
         liked_products.append(Product.objects.get(id=id_in_product_liked_users.object_id))
     return liked_products
+
+
+def get_product_total_likes(request):
+    Product_id = request.GET.get('Product_id')
+    product_by_id = Product.objects.get(id=Product_id)
+    total_likes_count = product_by_id.total_likes
+    data = {
+        'product_total_likes': total_likes_count
+    }
+    return JsonResponse(data)
 
 
 def _get_filtered_products_(filter_attributes, brand_to_sorted, gender_to_sort, sort_ascending_and_descending, sort_size_list, search_input):

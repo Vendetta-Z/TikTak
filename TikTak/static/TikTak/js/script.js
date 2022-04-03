@@ -11,10 +11,30 @@ function asynchronous_receiving_pagination_of_the_main_page(NewsPageNumber){
         data:data,
         url:'news/get_news_by_number',
         success:function(data){
-            console.log('f')        
             console.log(data)
+            
+            for(var i in data){
+                block_with_news_tables = document.getElementById('block_with_news_tables')
+                $('#block_with_news_tables').html('')
+                block_with_news_tables.insertAdjacentHTML('afterbegin',`
+                <div class="row" >
+                        <div class="col-md-3">
+                            <div class="card mb-4 product-wap  rounded-0">
+                                <div class="card rounded-1">
+                                    <img class="card-img Product-image_sizing rounded-0 img-fluid" src="`+ data[i]['urlToImage'] +`">
+                                </div>
+                                <div class="card-body">
+                                    <h5>` + data['title'].slice(0,50) +'...' + `</h5>
+                                    <p class="text-center mb-0 price">`+ data[i]['author'] +`</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>`) 
+            }
+
         }
     })
+    
 } 
 
 
@@ -25,7 +45,6 @@ function output_added_picture_for_the_product(input){
 
     html_code_to_display_the_selected_picture = '<img class="img-fluid" name="product_image" id="entering_file_img" alt="Изображение товара" src="' + product_image_input.files[0].name + ' " class="product_image" /> '
     fuck = '<input type="file" style="display:none;" name="additional_images_for_the_product" accept="image/*" value="'+ product_image_input.value +'"/>'
-    console.log(product_image_input.files[0].name)
     product_image_input_div.insertAdjacentHTML( "afterbegin", html_code_to_display_the_selected_picture)
     product_image_input_div.insertAdjacentHTML( "afterbegin", fuck)
     
@@ -142,38 +161,36 @@ function DeleteProduct(id){
                 $('#block_with_list_of_added_products').html('  ')
                 let Product_list = JSON.parse(data['ProductList'])
                 let Product_img = JSON.parse(data['ProductImages'])
-                console.log(Product_list)
-                console.log(Product_img)
 
                 for(var i in Product_list){
+                    total_likes = $.ajax({
+                            method:'GET',
+                            dataType:'json',
+                            data: {'Product_id':Product_list[i]['pk'] },
+                            url: "/Total_likes/",})
 
-                    $('#block_with_list_of_added_products').append(''+
-                        '<div class="col-md-3 recently_product">'+
-                            '<div class="card mb-4 product-wap  rounded-0">'+
-                                '<div class="card rounded-1">'+
-                                    '<img class="card-img Product-image_sizing rounded-0 img-fluid" src="'+ Product_img[Product_list[i]['pk']] +'">'+
+                    console.log(total_likes)
+                    $('#block_with_list_of_added_products').append('<div class="col-md-3 recently_product">'+
+                    '<div class="card mb-4 product-wap  rounded-0">'+
+                        '<div class="card rounded-1">'+
+                            '<img class="card-img Product-image_sizing rounded-0 img-fluid" src="'+ Product_img[Product_list[i]['pk']] +'">'+
                                 '<div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">'+
                                     '<ul class="list-unstyled">'+
-                                         '<li><p class="btn btn-success text-white"'+
-                                               'onclick="Like_product_btn_remove('+ Product_list[i]['id']  +')"'+
-                                               'id="Like_product_btn_id_' + Product_list[i]['id'] +'"'+
-                                               'onload="is_like()"'+
-                                               'Product_id=' + Product_list[i]['id'] +'>&#128147</p></li>'+
-
-                                        '<li><a class="btn btn-success text-white mt-2" href="'+  Product_list[i]['id']  +'/"><i class="far fa-eye"></i></a></li>'+
-                                        '<li><a class="btn btn-success text-white mt-2" href="'+  Product_list[i]['id']  +'/"><i class="fas fa-cart-plus"></i></a></li>'+
+                                        '<li><a class="btn btn-success text-white mt-2" href="'+  Product_list[i]['id']  +'"><i class="far fa-eye"></i></a></li>'+
+                                        '<li><a class="btn btn-success text-white mt-2" onclick="DeleteProduct('+ Product_list[i]['id']  +')" ><i class="fas fa-trash"></i></a></li>'+
                                     '</ul>'+
-                                '</div>'+
-                                '<div class="card-body">'+
-                                    '<a href="' +Product_list[i]['id']+ '/" class="h3 text-decoration-none">'   + Product_list[i]["fields"]["Product_name"]+  '</a><br>'+
-                                    '<ul class="w-100 list-unstyled d-flex justify-content-between mb-0">'+
-                                        '<li>M/L/X/XL</li>'+
-                                    '</ul>'+
-                                    '<p class="text-center mb-0 price">'  +Product_list[i]["fields"]["Product_price"]+  'p.</p>'+
-                                '</div>'+
                                 '</div>'+
                             '</div>'+
-                        '</div>')
+                            '<div class="card-body">'+
+                                '<a href="'+ Product_list[i]['id'] +'/" class="h3 text-decoration-none">'+ Product_list[i]["fields"]["Product_name"] +'</a><br>'+
+                                '<ul class="w-100 list-unstyled d-flex justify-content-between mb-0">'+
+                                    '<li>M/L/X/XL</li>'+
+                                    '<li><a class="fas fa-heart" style="color:red; cursor: pointer;text-decoration: none;"></a><a id="Product_'+ Product_list[i]["pk"]+'_likes">'+ total_likes +'</a></li>'+
+                                '</ul>'+
+                                '<p class="text-center mb-0 price">'+ Product_list[i]["fields"]["Product_price"] +' p.</p>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>')
 
             }
         }
@@ -242,23 +259,7 @@ function ChangeProductParams(P_id){
     formdata.append('Product_id', Product_id);
 
 
-    // for(let[key, value] of formdata){
-    //     console.log(`${key}:${value}`)
-    // }
 
-    // for(let[key, value] of formdata){
-    //     if (formdata.get(key) === ''){
-    //         formdata.delete(key);
-    //     }
-    //     if(formdata.get(key) === null){
-    //         formdata.delete(key)
-    //     }
-    // }
-    // console.log('====================================')
-
-    // for(let[key, value] of formdata){
-    //     console.log(`${key}:${value}`)
-    // }
 
     $.ajax({
         url: '/EditingProduct_ajax/',
@@ -330,9 +331,6 @@ function ChangeProductImage(Product, Imageid){
     var formdata = new FormData();
 
 
-    console.log(Imageid + Product)
-    console.log(inputbyid)
-    console.log('fuck')
     formdata.append('NewImage',inputbyid.files[0]);
     formdata.append('Imageid',Imageid);
     formdata.append('ProductId',Product);
@@ -378,7 +376,7 @@ function DeleteProductImage(Product,Imageid){
         success:function(data){
                     let ProductImage_list = JSON.parse(data['ProductImageList'])
                     $('#ProductMainImage_img').html('<img class="main-card-img img-fluid" src="/'+ ProductImage_list[0]['fields']['image'] +'" alt="Card image cap">')
-                    console.log(ProductImage_list)
+
                     $('#ProductImagesBlock').html(' ');
                     for (var image in ProductImage_list){
                         $('#ProductImagesBlock').append(''+
